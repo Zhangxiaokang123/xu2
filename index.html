@@ -1,0 +1,527 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>QQ音乐-千万正版音乐海量无损曲库新歌热歌天天畅听的高品质音乐平台！</title>
+	<link rel="stylesheet" href="css/base.css" />
+	<link rel="stylesheet" href="css/header.css" />
+	<link rel="stylesheet" href="css/content.css" />
+	<link rel="stylesheet" href="css/footer.css" />
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="css/singer.css">
+</head>
+<body>
+
+	<!--             头部                   -->
+	<div class="header">
+		<div class="nav inner" id="inner">
+			<div class="nav_t">
+				<div class="logo">
+					<a href="#"><img src="images/logo.png" alt="" /></a>
+				</div>
+				<div class="top_nav__item">
+					<ul>
+						<li><a href="#" class="current" title ="音乐馆" id="page">音乐馆</a></li>
+						<li><a href="#" title="我的音乐" id="my_music">我的音乐</a></li>
+						<li><a href="#" title="客户端">客户端</a></li>
+						<li><a href="#" title="音乐号">音乐号</a></li>
+						<li><a href="#" title="VIP">VIP</a></li>
+					
+					</ul>
+				</div>
+				<div class="search">
+					<input type="text" placeholder="搜索音乐、MV、歌单、用户" />
+					<i></i>
+				</div>
+				<div class="header_buttons">
+					<a href="void:;" class="sumbit" id="btn">登录</a>
+					<a href="#" class="start">开通绿钻豪华版</a>
+					<a href="#" class="pay">开通付费包</a>
+				</div>			
+			</div>
+
+	<div class="shadow" id="shadow">
+    <div class="model">
+      <div class="tit">
+        <div class="close" id="model-close">关闭</div>
+      </div>
+      <div class="contented">
+        <div class="user">
+            <div class="user-list">
+                <form id="form1" action="" method="post">
+                    <ul>
+                        <li><label>邮箱</label><input type="text" name="username" id="usermail" placeholder="用户邮箱"/> </li>
+                        <li><label>密码</label><input type="password" name="pass" id="pass" placeholder="6-15位密码" /></li>
+                        <div class="buttons">
+                            <a id="onbutton" ><button type="button" id="onsubmit">登录</button></a>
+                            <a class="openbutton"><button type="submit" id="getform2">注册</button></a>
+                        </div>
+                    </ul>
+                </form>
+                <form id="form2" action="" method="post">
+                    <ul>
+                        <li><label>用户名</label><input type="text" name="username" id="getusername" value="" placeholder="用户名"/></li>
+                        <li><label>邮箱</label><input type="text" name="usermail" id="getusermail" value="" placeholder="用户邮箱"/></li>
+                        <li><label>密码</label><input type="password" name="pass" id="getpass" placeholder="6-15位密码" /></li>
+                        <li><label>确认密码</label><input type="password" name="pass" id="repass" placeholder="请再次输入您的新密码" /></li>
+
+                        <div class="buttons">
+                            <a id="getbutton"><button type="button" id="getsubmit">提交注册信息</button></a>
+                            <p>使用已有账号<a href="#" id="getform1">登录</a></p>
+                        </div>
+                    </ul>
+                </form>
+            </div>
+        </div>
+        <script type="text/javascript">
+              function checkMailVlidate(x){
+                    var atpos = x.indexOf("@");
+                    var dotpos = x.lastIndexOf(".");
+                    if(atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
+                        console.log("邮箱错误");
+                        return false;
+                    }
+                    else{return true;}
+                }
+                function checkPasswordValidate(x) {
+                    if(x.length>15||x.length<6){
+                        console.log("密码错误");
+                        return false;
+                    }
+                    else {return true;}
+                }
+              var firstMail=null;
+              var firstPass=null;
+            document.getElementById("onsubmit").onclick = function() {
+                 if(succeed) {
+                   var Usermail = document.getElementById("usermail").value;
+                   var Pass = document.getElementById("pass").value;
+                   if (Usermail === "" || Pass === "") {
+                       alert("用户邮箱和密码不能为空");
+                       return false;
+                   }
+                   else if (!checkMailVlidate(Usermail)) {
+                       alert("不是一个有效的邮箱地址");
+                       return false;
+                   }
+                   else if (!checkPasswordValidate(Pass)) {
+                       alert("密码格式错误");
+                       return false;
+                   }
+                   else if (firstMail !== Usermail) {
+                       alert("用户邮箱错误");
+                   }
+                   else if (firstPass !== Pass) {
+                       alert("密码输入不正确");
+                   }
+                   else {
+                       console.log("登录成功");
+                   }
+               }
+               else {
+                     var usermail = document.getElementById("usermail").value;
+                     var pass = document.getElementById("pass").value;
+                     if (usermail === "" || pass === "") {
+                         alert("用户邮箱和密码不能为空");
+                         return false;
+                     }
+                     else if (!checkMailVlidate(usermail)) {
+                         alert("不是一个有效的邮箱地址");
+                         return false;
+                     }
+                     else if (!checkPasswordValidate(pass)) {
+                         alert("密码格式错误");
+                         return false;
+                     }
+                     else {
+                         var xmlhttp = new XMLHttpRequest();
+                         var objstatus;
+                         var objuser;
+                         xmlhttp.onreadystatechange = function () {
+                             if (this.readyState === 4 && this.status === 200) {
+                                 myObj = JSON.parse(this.responseText);
+                                 objstatus = myObj[0].status;
+                                 objuser = myObj[0].user;
+                                 console.log(objstatus);
+                                 console.log(objuser);
+                                 if (!objstatus) {
+                                     console.log("登录失败");
+                                     alert("登录失败");
+                                 }
+                                 else if (objuser === "") {
+                                     console.log("用户不存在！");
+                                     alert("用户不存在！");
+                                 }
+                                 else {
+                                     alert("登录成功");
+                                     console.log(objuser);
+                                 }
+                             }
+                         }
+                         xmlhttp.open("GET", "http://www.ljhhhx.com:8080/Test01/Login?userMail="+usermail+"&userPsw="+pass, true);
+                         xmlhttp.send();
+                     }
+               }
+            }
+            var succeed;
+              document.getElementById("getsubmit").onclick = function () {
+                    var getusername = document.getElementById("getusername").value;
+                    var getpass = document.getElementById("getpass").value;
+                    var getusermail = document.getElementById("getusermail").value;
+                    var repass = document.getElementById("repass").value;
+                    if (getusername === "" || getpass === "" || getusermail === "") {
+                        alert("注册的用户名、密码、邮箱不能为空");
+                        return false;
+                    }
+                    else if (!checkMailVlidate(getusermail)) {
+                        alert("不是一个有效的邮箱地址");
+                        return false;
+                    }
+                    else if (!checkPasswordValidate(getpass)) {
+                        alert("密码格式错误");
+                        return false;
+                    }
+                    else if (repass !== getpass) {
+                        alert("前后两次输入的密码不一致");
+                        return false;
+                    }
+                    else {
+                        var xmlhttp;
+                        if (window.XMLHttpRequest) {
+                            xmlhttp = new XMLHttpRequest();
+                        }
+                        else {
+                            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                        }
+                        xmlhttp.onreadystatechange = function () {
+                            if (this.readyState === 4 && this.status === 200) {
+                                myObj = JSON.parse(this.responseText);
+                                objstatus = myObj[0].status;
+                                objuserMail = myObj[0].user.mail;
+                                objuserPass = myObj[0].user.psw;
+                                objuser=myObj[0].user;
+                                console.log(objstatus);
+                                console.log(objuser);
+                                if (!objstatus) {
+                                    alert("注册失败");
+                                }
+                                else {
+                                    console.log("you can login now!");
+                                    succeed = true;
+                                    firstMail = objuserMail;
+                                    firstPass = objuserPass;
+                                    alert("注册成功！将为您自动跳转至登录界面");
+                                    setTimeout("jumpToLogin();", 2000);
+                                }
+                            }
+                        }
+                        xmlhttp.open("GET", "http://www.ljhhhx.com:8080/Test01/Regiter?userName=" + getusername + "&userPsw=" + getpass + "&userMail=" + getusermail, true);
+                        xmlhttp.send();
+                    }
+                }
+       function jumpToLogin() {
+           if (!succeed) {
+               return false;
+           }
+           else {
+               document.getElementById('form2').style.display = 'none';
+               document.getElementById('form1').style.display = 'block';
+           }
+       }
+        </script>
+        <script type="text/javascript">
+            document.getElementById('getform2').onclick = function(){
+                document.getElementById('form1').style.display= 'none';
+                document.getElementById('form2').style.display= 'block';
+                return false;
+            }
+        document.getElementById('getform1').onclick = function(){
+                document.getElementById('form2').style.display= 'none';
+                document.getElementById('form1').style.display= 'block';
+                return false;
+            }
+        </script>
+      </div>
+    </div>
+  </div>
+  <script>
+    let btn = document.getElementById('btn');
+    let shadow = document.getElementById('shadow');
+    btn.addEventListener('click', function(e) {
+      shadow.className = 'shadow show'
+      return false
+    }, false)
+    shadow.addEventListener('click', function(e) {
+      let target = e.target;
+      let _class = target.className;
+      if(_class.includes('shadow') || _class.includes('close')) {
+        shadow.className = 'shadow'
+      }
+      return false
+    }, false)
+  </script>
+			<div class="nav_b">
+				<ul>
+					<li>
+						<a class="current" href="/home" replace='true'>首页</a>
+					</li>
+					<li>
+						<a href="#">专辑</a>
+					</li>
+					<li>
+						<a href="/singer" class="current">歌手</a>
+					</li>
+					<li>
+						<a href="/list" class="current">排行榜</a>
+					</li>
+					<li>
+						<a href="/classification" class="current">分类歌单</a>
+					</li>
+					<li>
+						<a href="#">电台</a>
+					</li>
+					<li>
+						<a href="#">MV</a>
+					</li>
+					<li>
+						<a href="#">数字专辑</a>
+					</li>
+                    <li>
+                        <a href="/study.html" target="_blank">课程结业报告</a>
+                    </li>
+					
+				</ul>
+			</div>
+      
+		</div>
+		
+	</div>
+<div id="router-view"></div>
+	<div class="cl"></div>
+	<!--              内容                   -->
+	<!-- 歌单推荐 -->
+	  <script>
+         function Router(params){
+            // 记录routes配置
+            this.routes  = params.routes||[];
+            // 记录路由模式
+            this.mode = params.mode||'hash';
+            //初始化
+            this.init = function(){
+                var that = this;
+                //绑定路由响应事件
+                document.querySelectorAll('.current').forEach((item,index)=>{
+                  //a标签的点击事件
+                  item.addEventListener('click',function(e){
+                       //阻止a标签的默认行为
+                   if(e&&e.preventDefault){
+                        e.preventDefault()
+                   }else{
+                       window.e.returnValue = false
+                   }
+                //    判断是hash路由还是history路由
+                   if(that.mode=='hash'){
+                       if(this.getAttribute('replace')){
+                            var i = window.location.href.indexOf('#');
+                            // 通过replace方法直接替换url
+                            window.location.replace(window.location.href.slice(0,i>0?i:0+'#'+this.getAttribute(href)))
+                       }else{
+                           window.location.hash= this.getAttribute('href')
+                       }
+                   }else{
+                       //判断是push方法，还是replace方法
+                       if(this.getAttribute('replace')){
+                            window.history.replaceState({},'',window.location.origin+this.getAttribute('href'))
+                       }else{
+                        window.history.pushState({},'',window.location.origin+this.getAttribute('href'))
+                       }
+                   }
+                   that.routerChange()
+                  },false)
+
+                //   路由变化后，更新内容
+                if(this.mode=='hash'){
+                    window.addEventListener('hashchange',()=>{
+                        this.routerChange()
+                    })
+                }else{
+                    window.addEventListener('propstate',()=>{
+                        this.routerChange()
+                    })
+                }
+                this.routerChange()
+                })
+            },
+            this.routerChange=function(){
+                if(this.mode=='hash'){
+                    let nowHash = window.location.hash;
+                    let index = this.routes.findIndex((item,index)=>{
+                        return nowHash==('#'+item.path)
+                    })
+                   if(index>=0){
+                       document.getElementById('router-view').innerHTML=this.routes[index].component
+                   }else{
+                    //    如果没有找到相应的路由，则去找有没有*
+                    let defaultRoute = this.routes.findIndex(item=>{
+                        return item.path == '*'
+                    })
+                    // 找到*执行重定向
+                    if(defaultRoute>=0){
+                        var i = window.location.href.indexOf('#');
+                        // 用replace直接替换路由
+                        // window.location.replace(
+                        //         window.location.href.slice(0, i >= 0 ? i : 0) + '#' + this.routes[defaultIndex].redirect
+                        //     )
+                        window.location.hash= this.routes[defaultRoute].redirect
+                            
+                    }
+                   }
+                   
+                }else{
+                   let path = window.location.href.replace(window.location.origin,'')
+                  
+                   let index = this.routes.findIndex(item=>{
+                       return path==item.path
+                   })
+                   if(index>=0){
+                    document.getElementById('router-view').innerHTML=this.routes[index].component
+                   }else{
+                    let defaultRoute = this.routes.findIndex(item=>{
+                        return item.path == '*'
+                    })
+                  
+                    // 找到*执行重定向
+                    if(defaultRoute>=0){
+                        
+                        // 用replaceState直接替换路由
+                        // window.history.replaceState({},'',window.location.origin + this.routes[defaultRoute].redirect)                    
+                        window.history.pushState({},'',window.location.origin+this.routes[defaultRoute].redirect)
+                            this.routerChange()
+                    }
+                   }
+                }
+            }
+            this.init()
+        }
+         new Router({
+            mode: 'hash',
+            routes:[
+                { path: '/home', component: '<div class="content"><div class="inner"><div class="songSheet"><div class="songSheet_h"><h2><span>歌单推荐</span></h2></div><div class="songSheet_table"><ul><li><a href="#"class="current">为你推荐</a></li><li><a href="#">KTV热歌</a></li><li><a href="#">官方歌单</a></li><li><a href="#">轻音乐</a></li><li><a href="#">情歌</a></li><li><a href="#">网络歌曲</a></li></ul></div><div class="songSheet_content"><ul><li><img src="images/汪苏泷.jpg"alt=""/><a href="">每日新歌：汪苏泷深情献唱影视插曲</a><span>播放量：1.3万</span><i></i></li><li><img src="images/华晨宇.jpg"alt=""/><a href="">「花式摇滚VS峰式摇滚」引爆你压抑的灵魂</a><span>播放量：4416</span><i></i></li><li><img src="images/桥.jpg"alt=""/><a href="">古风·儿歌|藏剑少爷的学前音乐教材</a><span>播放量：13.6万</span><i></i></li><li><img src="images/姑娘.jpg"alt=""/><a href="">冷门电音：无法遗忘的女声诱惑</a><span>播放量：13.5万</span><i></i></li><li class="nomargin"><img src="images/女生.jpg"alt=""/><a href="">2018年3月华语新歌推荐</a><span>播放量：35.1万</span><i></i></li></ul></div><div class="songSheet_circles"><ol><li class="current"></li><li></li></ol></div><div class="carrousel"><a href="#"class="leftBtn"></a><a href="#"class="rightBtn"></a></div></div></div></div><div class="cl"></div><!--新歌首发--><div class="content"><div class="inner"><div class="songSheet"><div class="songSheet_h new"><h2><span>新歌首发</span></h2></div><a href="#"class="playall"><i></i>播放全部</a><div class="songSheet_table area"><ul><li><a href="#"class="current">内地</a></li><li><a href="#">港台</a></li><li><a href="#">欧美</a></li><li><a href="#">日本</a></li><li><a href="#">韩国</a></li></ul></div><div class="newsongs"><ul><li class="first "><img src="images/newsong1.jpg"title="No One Knows"/><a href="#"title="No One Knows 《南方有乔木》电视剧插曲"class="current">No One Knows《南方有乔木...</a><a href="#"class="songer"title="汪苏泷">汪苏泷</a><span>3:55</span></li><li class="first"><img src="images/newsong2.jpg"title="远大前程"/><a href="#"title="远大前程">远大前程</a><a href="#"class="songer"title="南征北战NZBZ">南征北战NZBZ</a><span>3:23</span></li><li class="first"><img src="images/newsong3.jpg"title="想你的一夜"/><a href="#"title="想你的一夜">想你的一夜</a><a href="#"class="songer"title="孙子涵">孙子涵</a><span>3:55</span></li><li><img src="images/newsong4.jpg"title="《北京女子图鉴》网络剧主题曲"/><a href="#"title="《北京女子图鉴》网络剧主题曲">送你一匹马《北京女子...</a><a href="#"class="songer"title="金志文">金志文</a><span>2:56</span></li><li><img src="images/newsong5.jpg"title="十八岁给我一个姑娘"/><a href="#"title="十八岁给我一个姑娘">十八岁给我一个姑娘《十八岁</a><a href="#"class="songer"title="好妹妹乐队">好妹妹乐队</a><span>4:02</span></li><li><img src="images/newsong6.jpg"title="《新笑傲江湖》电视剧插曲"/><a href="#"title="《新笑傲江湖》电视剧插曲">落花《新笑傲江湖》电视剧插..</a><a href="#"class="songer"title="李琦">李琦</a><span>3:35</span></li><li><img src="images/newsong7.jpg"title="Sorry"/><a href="#"title="Sorry">Sorry</a><a href="#"class="songer"title="艾福杰尼">艾福杰尼</a><span>5:07</span></li><li><img src="images/newsong8.jpg"title="我不想哭"/><a href="#"title="我不想哭">我不想哭</a><a href="#"class="songer"title="晨曦">晨曦</a><span>4:12</span></li><li><img src="images/newsong9.jpg"title="花开"/><a href="#"title="花开">花开</a><a href="#"class="songer"title="陈粒">陈粒</a><span>3:46</span></li></ul></div><div class="songSheet_circles"><ol class="four"><li class="current"></li><li></li><li></li><li></li></ol></div><div class="carrousel"><a href="#"class="leftBtn"></a><a href="#"class="rightBtn"></a></div></div></div></div><div class="cl"></div><!--精彩推荐--><div class="content introduce"><div class="inner"><div class="songSheet"><div class="songSheet_h exclusive"><h2><span>精彩推荐</span></h2></div><div class="songSheet_table dujia"><a href="#"><img src="images/独家张杰.jpg"alt=""/></a><a href="#"><img src="images/独家民谣.jpg"alt=""/></a></div><div class="songSheet_circles"><ol class="three"><li class="current"></li><li></li><li></li></ol></div><div class="carrousel dujiaBtn"><a href="#"class="leftBtn"></a><a href="#"class="rightBtn"></a></div></div></div></div><div class="cl"></div><!--新碟首发--><div class="content dishs"><div class="inner"><div class="songSheet"><div class="songSheet_h dish"><h2><span>新碟首发</span></h2></div><a href="#"class="more">更多<span></span></a><div class="songSheet_table area"><ul><li><a href="#"class="current">内地</a></li><li><a href="#">港台</a></li><li><a href="#">欧美</a></li><li><a href="#">韩国</a></li><li><a href="#">日本</a></li></ul></div><div class="songSheet_content newdish"><ul><li><img src="images/newdish1.jpg"alt=""/><a href="">经典咏流传</a><a href="#"title="张杰">张杰</a><i></i></li><li><img src="images/newdish2.jpg"alt=""/><a href="">杰姆金属音乐节live合辑</a><a href="#"title="华语群星">华语群星</a><i></i></li><li><img src="images/newdish3.jpg"alt=""/><a href="">我在诛仙逍遥涧</a><a href="#"title="王俊凯">王俊凯</a><i></i></li><li><img src="images/newdish4.jpg"alt=""/><a href="">千世劫</a><a href="#"title="萌萌哒天团">萌萌哒天团</a><i></i></li><li><img src="images/newdish5.jpg"alt=""/><a href="">郝云2016-2017冲动巡演全纪录</a><a href="#"title="郝云">郝云</a><i></i></li><li><img src="images/newdish6.jpg"alt=""/><a href="">永远的我</a><a href="#"title="陈冰">陈冰</a><i></i></li><li><img src="images/newdish7.jpg"alt=""/><a href="">青春不再回</a><a href="#"title="许华升">许华升</a><i></i></li><li><img src="images/newdish8.jpg"alt=""/><a href="">别样桃花</a><a href="#"title="徐子崴">徐子崴</a><i></i></li><li><img src="images/newsong9.jpg"alt=""/><a href="">给你</a><a href="#"title="曾缔">曾缔</a><i></i></li><li><img src="images/newdish10.jpg"alt=""/><a href="">幸福的弧度</a><a href="#"title="唐一嘉">唐一嘉</a><i></i></li></ul></div><div class="songSheet_circles"><ol class="four"><li class="current"></li><li></li><li></li><li></li></ol></div><div class="carrousel dishBtn"><a href="#"class="leftBtn"></a><a href="#"class="rightBtn"></a></div></div></div></div><div class="cl"></div><!--排行榜--><div class="content ranks"><div class="inner"><div class="songSheet"><div class="songSheet_h rank"><h2><span>排行榜</span></h2></div><a href="#"class="more rankbang">更多<span></span></a><div class="songranks"><ul><li class="rank1"><h3><a href="play.html">流行指数</a><span></span></h3><div class="ge"><span>1</span><a href="#">平凡之路</a><a href="#"class="geshou">朴树</a></div><div class="ge er"><span>2</span><a href="#">假行僧(live)</a><a href="#"class="geshou">华晨宇</a></div><div class="ge san"><span>3</span><a href="#">童话幻灭</a><a href="#"class="geshou">蒋蒋/王乐乐</a></div><div class="ge si"><span>4</span><a href="#">和你在一起</a><a href="#"class="geshou">汪苏泷</a></div></li><li class="rank2"><h3><a href="play.html">热歌</a><span></span></h3><div class="ge"><span>1</span><a href="#">离人愁</a><a href="#"class="geshou">袁仁杰</a></div><div class="ge er"><span>2</span><a href="#">体面</a><a href="#"class="geshou">于文文</a></div><div class="ge san"><span>3</span><a href="#">白羊</a><a href="#"class="geshou">徐秉龙/沈以诚</a></div><div class="ge si"><span>4</span><a href="#">空空如也</a><a href="#"class="geshou">胡66</a></div></li><li class="rank3"><h3><a href="play.html">新歌</a><span></span></h3><div class="ge"><span>1</span><a href="#">No One Knows</a><a href="#"class="geshou">汪苏泷</a></div><div class="ge er"><span>2</span><a href="#">送你一匹马</a><a href="#"class="geshou">金志文</a></div><div class="ge san"><span>3</span><a href="#">你不会懂</a><a href="#"class="geshou">钟欣潼</a></div><div class="ge si"><span>4</span><a href="#">想你一整夜</a><a href="#"class="geshou">孙子涵</a></div></li><li class="rank4"><h3><a href="play.html">欧美</a><span></span></h3><div class="ge"><span>1</span><a href="#">Everybody Hates Me</a><a href="#"class="geshou">The Chainsmokers</a></div><div class="ge er"><span>2</span><a href="#">Strawberries&amp;Ciga...</a><a href="#"class="geshou">Troye Sivan</a></div><div class="ge san"><span>3</span><a href="#">Done For Me</a><a href="#"class="geshou">Charlie Puth/Kehlani</a></div><div class="ge si"><span>4</span><a href="#">Remind Me to Forget</a><a href="#"class="geshou">Kygo/Miguel</a></div></li><li class="nomargin rank5"><h3><a href="play.html">韩国</a><span></span></h3><div class="ge"><span>1</span><a href="#">Look</a><a href="#"class="geshou">GOT7(갓세븐)</a></div><div class="ge er"><span>2</span><a href="#">LOVE SCENARIO(사...</a><a href="#"class="geshou">iKON(아이콘)</a></div><div class="ge san"><span>3</span><a href="#">뿜뿜(BBoom BBoom...</a><a href="#"class="geshou">모모랜드(MOMO...</a></div><div class="ge si"><span>4</span><a href="#">별이빛나는밤(Star...</a><a href="#"class="geshou">MAMAMOO(마마무)</a></div></li></ul></div></div></div></div><div class="cl"></div><!--MV--><div class="content MVs"><div class="inner"><div class="songSheet"><div class="songSheet_h MV"><h2><span>MV</span></h2></div><div class="songSheet_table MV_content"><ul><li><a href="#"class="current">精选</a></li><li><a href="#">内地</a></li><li><a href="#">韩国</a></li><li><a href="#">港台</a></li><li><a href="#">欧美</a></li><li><a href="#">日本</a></li></ul></div><div class="songSheet_content Mvideo"><ul><li><img src="images/mv1.png"alt=""/><a href=""title="披头士来了！－披头士乐队中国全曲库上线发行特别策划－ (Vol.2 被Beatles哪首歌一耳钟情？)">披头士来了！－披头士乐队中国...</a><a href="#"class="geshou"title="The Beatles">The Beatles</a><i></i><p><span></span>&nbsp;9536</p></li><li><img src="images/mv2.png"alt=""/><a href=""title="最好的快要发生">最好的快要发生</a><a href="#"class="geshou"title="马天宇">马天宇</a><i></i><p><span></span>&nbsp;6925</p></li><li><img src="images/mv3.png"alt=""/><a href=""title="十八岁给我一个姑娘 (《十八岁给我一个姑娘》电视剧同名主题曲)">十八岁给我一个姑娘(《十八岁..</a><a href="#"class="geshou"title="好妹妹乐队">好妹妹乐队</a><i></i><p><span></span>&nbsp;3.5万</p></li><li><img src="images/mv4.png"alt=""/><a href=""title="你不会懂 (网剧《动物系恋人啊》片尾特別指定曲)">你不会懂(网剧《动物系恋人..</a><a href="#"class="geshou"title="钟欣潼">钟欣潼</a><i></i><p><span></span>&nbsp;2.9万</p></li><li class="nomargin"><img src="images/mv5.png"alt=""/><a href=""title="爱了很久的朋友 (《后来的我们》电影插曲)">爱了很久的朋友(《后来的我...</a><a href="#"class="geshou"title="田馥甄">田馥甄</a><i></i><p><span></span>&nbsp;1.5万</p></li><li><img src="images/mv6.png"alt=""/><a href=""title="明星">明星</a><a href="#"class="geshou"title="胡彦斌">胡彦斌</a><i></i><p><span></span>&nbsp;1万</p></li><li><img src="images/mv7.png"alt=""/><a href=""title="远大前程 (《远大前程》电视剧同名主题曲)">远大前程(《远大前程》电视...</a><a href="#"class="geshou"title="南征北战NZBZ">南征北战NZBZ</a><i></i><p><span></span>&nbsp;1.5万</p></li><li><img src="images/mv8.png"alt=""/><a href=""title="Say I Do">Say I Do</a><a href="#"class="geshou"title="弦子">弦子</a><i></i><p><span></span>&nbsp;2.1万</p></li><li><img src="images/mv9.png"alt=""/><a href=""title="因为遇见你2018版 (《遇见你真好》电影片尾曲)">因为遇见你2018版(《遇见你..</a><a href="#"class="geshou"title="王源">王源</a><i></i><p><span></span>&nbsp;3.1万</p></li><li class="nomargin"><img src="images/mv10.png"alt=""/><a href=""title="红烧肉">红烧肉</a><a href="#"class="geshou"title="王蓉">王蓉</a><i></i><p><span></span>&nbsp;1.3万</p></li></ul></div><div class="songSheet_circles"><ol class="four"><li class="current"></li><li></li><li></li><li></li></ol></div><div class="carrousel  mvBtn"><a href="#"class="leftBtn"></a><a href="#"class="rightBtn"></a></div></div></div></div>' },
+                { path: '/singer', component: '<div class="singer_header"><h1 class="push_tit">万千歌手 尽在眼前</h1><h2 class="pop_tit">登录可查看你的歌手</h2><a href="#"type="submit"></a></div><div class="main"><div class="mod_singer_tag"id="tag_box"><div class="singer_tag_list"><a href="javascript:;"class="singer_item_select_all"hidefocus>热门</a><a href="javascript:;"class="singer_item_select"id="1"hidefous>A</a><a href="javascript:;"class="singer_item_select"id="2"hidefous>B</a><a href="javascript:;"class="singer_item_select"id="3"hidefous>C</a><a href="javascript:;"class="singer_item_select"id="4"hidefous>D</a><a href="javascript:;"class="singer_item_select"id="5"hidefous>E</a><a href="javascript:;"class="singer_item_select"id="6"hidefous>F</a><a href="javascript:;"class="singer_item_select"id="7"hidefous>G</a><a href="javascript:;"class="singer_item_select"id="8"hidefous>H</a><a href="javascript:;"class="singer_item_select"id="9"hidefous>I</a><a href="javascript:;"class="singer_item_select"id="10"hidefous>J</a><a href="javascript:;"class="singer_item_select"id="11"hidefous>K</a><a href="javascript:;"class="singer_item_select"id="12"hidefous>L</a><a href="javascript:;"class="singer_item_select"id="13"hidefous>M</a><a href="javascript:;"class="singer_item_select"id="14"hidefous>N</a><a href="javascript:;"class="singer_item_select"id="15"hidefous>O</a><a href="javascript:;"class="singer_item_select"id="16"hidefous>P</a><a href="javascript:;"class="singer_item_select"id="17"hidefous>Q</a><a href="javascript:;"class="singer_item_select"id="18"hidefous>R</a><a href="javascript:;"class="singer_item_select"id="19"hidefous>S</a><a href="javascript:;"class="singer_item_select"id="20"hidefous>T</a><a href="javascript:;"class="singer_item_select"id="21"hidefous>U</a><a href="javascript:;"class="singer_item_select"id="22"hidefous>V</a><a href="javascript:;"class="singer_item_select"id="23"hidefous>W</a><a href="javascript:;"class="singer_item_select"id="24"hidefous>X</a><a href="javascript:;"class="singer_item_select"id="25"hidefous>Y</a><a href="javascript:;"class="singer_item_select"id="26"hidefous>Z</a><a href="javascript:;"class="singer_item_select"id="27"hidefous>#</a></div><div class="singer_tag_list_area"><a href="javascript:;"class="singer_tag_select_all"hidefocus>全部</a><a href="javascript:;"class="singer_tag_item"id="1"hidefocus>内地</a><a href="javascript:;"class="singer_tag_item"id="2"hidefocus>港台</a><a href="javascript:;"class="singer_tag_item"id="3"hidefocus>欧美</a><a href="javascript:;"class="singer_tag_item"id="4"hidefocus>日本</a><a href="javascript:;"class="singer_tag_item"id="5"hidefocus>韩国</a><a href="javascript:;"class="singer_tag_item"id="6"hidefocus>其他</a></div><div class="singer_tag_list_sex"><a href="javascript:;"class="singer_sex_all"id="1">全部</a><a href="javascript:;"class="singer_sex"id="1">男</a><a href="javascript:;"class="singer_sex"id="2">女</a><a href="javascript:;"class="singer_sex"id="3">组合</a></div><div class="singer_tag_list_genre"><a href="javascript:;"class="singer_genre_all"id="1">全部</a><a href="javascript:;"class="singer_genre"id="2">流行</a><a href="javascript:;"class="singer_genre"id="3">嘻哈</a><a href="javascript:;"class="singer_genre"id="4">摇滚</a><a href="javascript:;"class="singer_genre"id="5">电子</a><a href="javascript:;"class="singer_genre"id="6">民谣</a><a href="javascript:;"class="singer_genre"id="7">轻音乐</a><a href="javascript:;"class="singer_genre"id="8">爵士</a><a href="javascript:;"class="singer_genre"id="9">古典</a><a href="javascript:;"class="singer_genre"id="10">乡村</a><a href="javascript:;"class="singer_genre"id="11">蓝调</a></div></div></div>' },
+                { path: '/classification', component: '' },
+                { path: '/list', component: '' },
+                { path:'*', redirect:'/home'}
+            ]
+        });
+
+    </script>
+	<div class="cl"></div>
+
+	<!--                   尾部             -->
+	<div class="footer">
+		<div class="inner">
+			<div class="footer_h">
+				<div class="info client">
+					<h3>下载QQ音乐客户端</h3>
+					<ul>
+						<li>
+							<a href="#" class="pc current">	<span>Pc版</span></a>
+						
+						</li>
+						<li>
+							<a href="#"  class="mac"><span>Mac版</span></a>
+							
+						</li>
+						<li>
+							<a href="#"  class="android"><span>Android版</span></a>
+							
+						</li>
+						<li>
+							<a href="#"  class="iphone"><span>iPhone版</span></a>
+							
+						</li>
+					</ul>
+				</div>
+
+
+
+				<div class="info client  special">
+						<h3>特色产品</h3>
+						<ul>
+							<li >
+								<a href="#"  class="kge"><span>全民K歌</span></a>
+							</li>
+							<li >
+								<a href="#"  class="super"><span>Super Sound</span></a>
+							</li>
+							<li >
+								<a href="#"  class="Qp"><span>QPlay</span></a>
+							</li>
+							<li  class="none"><a href="#"><span>车载互联</span></a></li>
+							<li  class="none"><a href="#"><span>QQ演出</span></a></li>
+							
+						</ul>
+				</div>
+				<div class="info client nomargin links">
+					<h3>合作链接</h3>
+					<ul>
+						<li><a href="#">CJ E&amp;M</a></li>
+						<li><a href="#">腾讯视频</a></li>
+						<li><a href="#">手机QQ空间</a></li>
+						<li><a href="#">最新版QQ</a></li>
+						<li><a href="#">腾讯社交广告</a></li>
+						<li><a href="#">电脑管家</a></li>
+						<li><a href="#">QQ浏览器</a></li>
+						<li><a href="#">腾讯微云</a></li>
+						<li><a href="#">腾讯云</a></li>
+						<li><a href="#">企鹅FM</a></li>
+						<li><a href="#">智能电视网</a></li>
+						<li><a href="#">当贝市场</a></li>
+					</ul>
+
+				</div>
+			</div>
+				
+			<div class="cl"></div>
+			<div class="footer_platform">
+				<h3>开放平台</h3>
+				<ul>
+					<li><a href="#">腾讯音乐人平台</a></li>
+					<li><a href="#">音乐号认证</a></li>
+					<li><a href="#">上传视频</a></li>
+					<li><a href="#">上传音频</a></li>
+				</ul>
+			</div>
+			<div class="footer_copyright">
+				<p>
+						<a href="#">关于腾讯</a> |
+						<a href="#">About Tencent</a> |
+						<a href="#">服务条款</a> |
+						<a href="#">用户服务协议</a> |
+						<a href="#">隐私政策</a> |
+						<a href="#">权利声明</a> |
+						<a href="#">广告服务</a> |
+						<a href="#">腾讯招聘</a> |
+						<a href="#">客服中心</a> |
+						<a href="#">网站导航</a> |
+					
+				</p>
+				<p>Copyright © 1998 - 2018 Tencent. by <a href="#">Cty</a><a href="#">All Rights Reserved.</a></p>
+				<p>腾讯公司 
+					<a href="#">版权所有</a>
+					<a href="#">腾讯网络文化经营许可证</a>
+				</p>
+			</div>
+		</div>
+	</div>
+
+		<!-- 反馈	 -->
+	<div class="feedback">
+		<a href="#" class="up current"><span></span></a>
+		<a href="#" class="information"><span>反馈</span></a>
+		<a href="#" class="down"><span></span></a>
+	</div>
+
+</body>
+</html>

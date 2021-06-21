@@ -1,0 +1,490 @@
+		.content{
+			width: 100%;
+			height: 550px;
+			background-image: url(../images/bg_detail.jpg);
+			background-repeat: no-repeat;
+			background-position: center top;
+
+		}
+		.content .songSheet{
+			position: relative;
+		}
+		.content .songSheet .songSheet_h{
+			width: 100%;
+			height: 114px;
+			
+		
+		}
+		.content .songSheet .songSheet_h h2{
+			width: 196px;
+			height: 40px;
+			padding-top: 50px;
+			margin:0 auto;	
+		
+		}
+		.content .songSheet .songSheet_h h2 span{
+			display: block;
+			width: 196px;
+			height: 40px;
+			text-indent: -99em;
+			background-image: url(../images/content_title.png);
+			background-repeat: no-repeat;
+			background-position: 0 0;
+		}
+		.content .songSheet .songSheet_table{
+			height: 50px;
+			overflow: hidden;
+		}
+		.content .songSheet .songSheet_table ul{
+			width: 650px;
+			list-style: none;
+			margin: 0 auto;
+			font-size: 15px;
+
+		}
+		.content .songSheet .songSheet_table ul li{
+			float: left;
+			margin: 0 24px;
+		}
+		.content .songSheet .songSheet_table ul li a{
+			display: block;
+			text-decoration: none;
+			color: #333;
+		}
+		.content .songSheet .songSheet_table ul li .current{
+			color: #31c27c;
+		}
+		.content .songSheet .songSheet_table ul li a:hover{
+			color: #31c27c;
+
+		}
+		.content .songSheet .songSheet_content{
+			width: 1200px;
+			height: 310px;
+			padding-bottom: 20px;
+		}
+		.content .songSheet .songSheet_content ul{
+			list-style: none;
+
+		}
+		.content .songSheet .songSheet_content ul li{
+			position: relative;
+			width: 224px;
+			float: left;
+			margin-right:20px;
+			font-size: 14px;
+			font-weight: 400;
+
+		} 
+		.content .songSheet .songSheet_content ul li img{
+			width: 224px;
+			height: 224px;
+			padding-bottom: 15px;
+		}
+		.content .songSheet .songSheet_content ul li a{
+			display: block;
+			text-decoration: none;
+			color: #333;
+			line-height: 22px;
+		}
+		.content .songSheet .songSheet_content ul li a:hover{
+			color:#31c27c;
+		}
+		.content .songSheet .songSheet_content ul li span{
+			display: block;
+			font-size: 14px;
+			line-height: 21px;
+		}
+
+		.content .songSheet .songSheet_content ul li i{
+			display: block;
+			width: 70px;
+			height: 70px;	
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -60px;
+			margin-left: -35px;			
+		}
+		.content .songSheet .songSheet_content ul li i:hover{
+			background-image: url(../images/video.png);
+			background-repeat: no-repeat;
+			opacity: 0.7;
+		}
+
+
+
+
+		.content .songSheet .songSheet_circles{
+			height: 38px;
+		
+		}
+		.content .songSheet .songSheet_circles ol{
+			list-style: none;
+			width: 60px;
+			height: 10px;
+			margin: 15px auto;
+			line-height: 38px;
+
+		
+		}
+		.content .songSheet .songSheet_circles ol li{
+			float: left;
+			margin: 0 10px;
+			width: 10px;
+			height: 10px;
+			background-color: rgba(0, 0, 0, 0.1);
+			border-radius: 10px;
+		}
+		.content .songSheet .songSheet_circles ol .current{
+			background-color: rgba(0,0,0,.3)
+		}
+
+		.content .songSheet .carrousel a{
+			display:block;
+			width: 20px;
+			height: 38px;
+			position: absolute;
+			top: 250px;
+			background-image: url(../images/icon.png);
+			background-repeat: no-repeat;
+		}
+
+		.content .songSheet .carrousel .leftBtn{
+			left:-80px;
+			background-position: -20px -120px;
+		}
+		.content .songSheet .carrousel .rightBtn{
+			right: -80px;
+			background-position: 0 -120px;
+			
+		}
+		.content .songSheet .new h2 span{
+			background-position: 0 -50px;
+		} 
+		.content .songShee .playall a{
+			display: block;
+			width: 75px;
+			height: 36px;
+			position: absolute;
+			z-index: 3;
+		}
+		.content .songSheet .area ul{
+			width: 390px;
+		}
+
+		.content .songSheet .playall{
+			display: block;
+			width: 75px;
+			height: 36px;
+			padding: 0 23px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			text-decoration: none;
+			color: #333;
+			font-size: 14px;
+			line-height: 36px;
+			text-align: center;
+			position: absolute;
+			left: 0;
+			top: 70px;
+		}
+		.content .songSheet .playall i{
+			display: block;
+			float: left;
+			width: 13px;
+			height: 16px;
+			background-image: url(../images/icon.png);
+			background-repeat: no-repeat;
+			background-position: -60px -220px;
+			margin:10px 6px 0 0;
+		}
+		.content .songSheet .playall:hover{
+			background-color: #ededed;
+		}
+
+		.content .songSheet .newsongs{
+			width: 1230px;
+			height: 333px;
+		}
+		.content .songSheet .newsongs ul{
+			list-style: none;
+
+		}
+		.content .songSheet .newsongs ul li{
+			width: 410px;
+			height: 86px;
+			float: left;
+			font-size: 14px;
+			color: #333;
+			position: relative;
+			border-top: 1px solid #ededed;
+			padding: 10px 0 10px 0;
+		}
+		.content .songSheet .newsongs ul .first{
+			border-top: none;
+		}
+		.content .songSheet .newsongs ul  li .current{
+			color: #31c27c;
+		}
+		.content .songSheet .newsongs ul li img{
+			width: 86px;
+			height: 86px;
+			float: left;
+
+		}
+
+		.content .songSheet .newsongs ul li a{
+			display: block;
+			width: 310px;
+			line-height: 22px;
+			float: left;
+			padding: 20px 0 0 10px;
+			text-decoration: none;
+			color: #333;
+		}
+		.content .songSheet .newsongs ul li .songer{
+			color: #999;
+			padding-top: 0px;
+		}
+		.content .songSheet .newsongs ul li a:hover{
+			color:#31c27c;
+		}
+		.content .songSheet .newsongs ul li span{
+			display: block;
+			position: absolute;
+			right: 35px;
+			top: 45px;
+			color: #999;
+			font-family: "poppin";
+
+		}
+		.content .songSheet .songSheet_circles .four{
+			width: 120px;
+		}
+		.introduce{
+			height: 420px;
+		}
+		.content .songSheet .exclusive h2 span{
+			background-position: 0 -100px;
+		} 
+		.content .songSheet .dujia{
+			width: 1220px;
+			height: 250px;
+		}
+		.content .songSheet .dujia a{
+			display: block;
+			width: 590px;
+			height: 236px;
+			margin-right: 20px;
+			float: left;
+		}
+		
+		.content .songSheet .dujia a img{
+			width: 590px;
+			height: 236px;
+		}
+		.content .songSheet .songSheet_circles .three{
+			width: 90px;
+		}
+
+		.content .songSheet .dujiaBtn .leftBtn{
+			top: 210px;
+		}
+		.content .songSheet .dujiaBtn .rightBtn{
+			top: 210px;
+		}
+		.dishs{
+			height: 837px;
+		}
+		.content .songSheet .dish h2 span{
+			background-position: 0 -150px;
+		}
+		.content .songSheet .more{
+			display: block;
+			float: left;
+			width:50px;
+			height: 30px;
+			position: absolute;
+			right: 0;
+			top: 100px;
+			text-decoration: none;
+			color: #333;
+			font-size: 14px;
+			font-family: "poppin";
+			line-height: 30px;
+
+		}
+		.content .songSheet .more span{	
+			display: inline-block;
+			width: 7px;
+			height: 12px;
+			background-image: url(../images/icon.png);
+			background-repeat: no-repeat;
+			background-position: -120px -40px;
+			margin-left: 6px;
+		}
+		.content .songSheet .more:hover{
+			color: #31c27c;		
+		}
+		.content .songSheet .more span:hover{
+			background-position: -120px -60px;
+		}
+		.content .songSheet .newdish{
+			width: 1220px;
+			height: 600px;
+		}
+		.content .songSheet .newdish ul li{
+			padding-bottom: 25px;
+
+		}
+		.content .songSheet .dishBtn .leftBtn{
+			top: 430px;
+		}
+		.content .songSheet .dishBtn .rightBtn{
+			top: 430px;
+		}
+	.ranks{
+		height: 670px;
+	}
+
+	.content .songSheet .rank h2 span{
+			background-position: 0 -200px;
+		}
+	.content .songSheet .rankbang{
+		top:60px;
+	}
+	.content .songSheet .songranks{
+		width: 1200px;
+		height: 500px;
+		
+	}
+	.content .songSheet .songranks ul{
+		list-style: none;
+		height: 500px;
+	}
+
+	.content .songSheet .songranks ul li{
+		width: 224px;
+		height: 500px;
+		margin-right: 20px;
+		float: left;
+		position: relative;
+		background-image: url(../images/rank_bg.jpg);
+		background-repeat: no-repeat;
+	}
+
+	.content .songSheet .songranks ul .rank1{background-position: 0 0;}
+	.content .songSheet .songranks ul .rank2{background-position: -224px 0;}
+	.content .songSheet .songranks ul .rank3{background-position: -448px 0;}
+	.content .songSheet .songranks ul .rank4{background-position: -672px 0;}
+	.content .songSheet .songranks ul .rank5{background-position: -897px 0;}
+
+
+
+
+	.content .songSheet .songranks ul li h3{
+		width: 200px;
+		height: 58px;
+		position: absolute;
+		left: 50%;
+		margin-left: -100px;
+		top: 50px;
+	}
+	.content .songSheet .songranks ul li h3 a{
+		display: block;
+		height: 36px;
+		text-decoration: none;
+		color: #fff;
+		font-weight: 400;
+		font-size: 26px;
+		line-height: 36px;
+		text-align: center;
+		padding-top: 22px;
+		background-image:url(../images/content_title.png);
+		background-repeat: no-repeat;
+		background-position: 65px -300px;
+	}
+
+	.content .songSheet .songranks ul li h3 span{
+		display: block;
+		width: 36px;
+		height: 2px;
+		background-color: #fff;
+		margin:30px 0 50px 80px;
+	}
+
+	.content .songSheet .songranks ul li .ge{
+		width: 170px;
+		height: 50px;
+		position: absolute;
+		top: 200px;
+		left: 30px;
+		font-size: 14px;
+		color:#fff;
+		font-family: "poppin";
+	} 
+	.content .songSheet .songranks ul li .er{top: 270px;}
+	.content .songSheet .songranks ul li .san{top: 340px;}
+	.content .songSheet .songranks ul li .si{top: 410px;}
+	
+
+	.content .songSheet .songranks ul li .ge a{
+		text-decoration: none;
+		color: #fff;
+		line-height: 25px;
+		padding-bottom: 10px;
+		font-size: 14px;
+	}
+
+	.content .songSheet .songranks ul li .ge .geshou{
+		display: block;
+		padding-left: 12px;
+	}
+	.MVs{
+		height: 670px;
+	}
+	.content .songSheet .MV h2 span {
+			background-position: 0 -250px;
+	}
+	.content .songSheet .MV_content{
+		width: 470px;
+		margin: 0 auto;
+	}
+	.content .songSheet .Mvideo {
+		height: 430px;
+	}
+	.content .songSheet .Mvideo ul li{
+		margin-bottom: 25px;
+	}
+
+	.content .songSheet .Mvideo ul li img{
+		height: 126px;
+	}
+	.content .songSheet .Mvideo ul li a{
+		font-size: 15px
+	}
+	.content .songSheet .Mvideo ul li .geshou{
+		font-size: 14px;
+		color: #999;
+	}
+	.content .songSheet .Mvideo ul li p{
+		color: #999;
+		font-family: "poppin";
+	}
+	.content .songSheet .Mvideo ul li span{
+		display: inline-block;
+		margin-top: 5px;
+		width: 19px;
+		height: 13px;
+		background-image: url(../images/icon.png);
+		background-repeat: no-repeat;
+		background-position:-180px -20px; 
+	
+	}
+	.content .songSheet .mvBtn .leftBtn{
+		top: 340px;
+	}
+	.content .songSheet .mvBtn .rightBtn{
+		top: 340px;
+	}

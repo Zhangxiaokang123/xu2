@@ -1,0 +1,129 @@
+  .shadow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      opacity: 0;
+      background: rgba(0,0,0,.3);
+      transition: all .3s;
+      z-index: -1;
+    }
+    .shadow.show {
+      z-index: 1;
+      opacity: 1;
+    }
+    .shadow.show .model {
+      transform: translate(-50%, -50%);
+    }
+    .model {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      width: 520px;
+      background: #fff;
+      border-radius: 6px;
+      transition: all .3s;
+    }
+    .model .tit {
+      display: flex;
+      width: 500px;
+      line-height: 30px;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    .model .tit .close {
+      margin-left: auto;
+      cursor: pointer;
+      font-color: #31c27c;
+    }
+    .model .contented {
+      width: 500px;
+      height: 500px;    
+      padding: 10px;
+    }
+  .user{
+            /* min-width:980px;*/
+             text-align: center;
+             margin: 0px;
+             padding: 0px;
+             position: relative;
+         }
+         .user-list{
+             width: 470px;
+             height: 400px;
+             padding: 15px;
+             margin: 20px auto;
+             position: relative;
+             border: 1px solid #DBDBDB;
+         }
+         .user-list ul{
+             list-style: none;
+             width: 100%;
+             overflow: hidden;
+             height: 300px;
+             position: relative;
+             padding: 10px 0px;
+             margin: 0px;
+         }
+         .user-list ul li{
+             width: 100%;
+             list-style: none;
+             margin-bottom:15px;
+         }
+         .user-list ul li label{
+             display: inline-block;
+             width:20%;
+             text-align: right;
+             font-size:16px;
+             margin-right: 10px;
+             font-family: "微软雅黑";
+         }
+         .user-list ul li input{
+             display: inline-block;
+             border: 1px solid #DBDBDB;
+             border-radius:4px;
+             -webkit-border-radius: 4px;
+             -moz-border-radius: 4px;
+             -ms-border-radius:4px;
+             height: 30px;
+             padding: 2px 5px;
+             margin-right: 40px;
+             vertical-align:middle;
+         }
+         .buttons{
+             width: 100%;
+             height:40px;
+             padding: 5px 10px;
+             position: absolute;
+             bottom: 40px;
+             left: 0px;
+             right: 0px;
+         }
+         .buttons p{
+             /*position: relative;*/
+             margin-top: 10px;
+             bottom: 10px;
+             font-size: 12px;
+         }
+         .openbutton,#onbutton{
+             display: inline-block;
+             width: 40%;
+         }
+        .buttons button{
+            width: 90%;
+            color: #fff;
+            padding: 5px 10px;
+            background-color:  #31c27c;
+            border: 1px solid black;
+            border-radius: 4px;
+            vertical-align: middle;
+            height: 35px;
+            line-height: 25px;
+            cursor:pointer;
+            margin: 10px 25px 10px 10px;
+        }
+        #form2{
+            display: none;
+        }

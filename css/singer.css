@@ -1,0 +1,153 @@
+div{
+	display: block;
+}
+.singer_header{
+	position: relative;
+	width: 100%;
+	height: 376px;
+    overflow: hidden;
+    background:url("../images/bg_singer.jpg") 50% 0 repeat-x; 
+    text-align: center;
+}
+.push_tit{
+	font-size: 60px;
+	color:white;
+	margin-top: 80px; 
+}
+.pop_tit{
+	font-size: 25px;
+	color:white;
+	margin-top: 15px;
+}
+
+.main{
+	width: 100%;
+	height: 1000px;
+	margin: 0 50px;
+}
+.mod_singer_tag{
+	width:100%;
+	height: 163px;
+    margin: 30px 0 20px;
+    padding: 34px 0 17px 40px;
+    background: #fbfbfd;
+}
+.singer_tag_list{
+	padding-bottom: 3px;
+	height:auto;
+	width:1200px;
+	overflow: hidden;
+}
+.singer_item_select{
+	height: 26px;
+	width: 10px;
+    float:left;
+    line-height: 27px;
+    padding: 0 8px;
+    margin:0 12px 14px 0; 
+    text-decoration: none;
+    color: #000;
+}
+.singer_item_select_all{
+	float: left;
+	width: 44px;
+	height: 24px;
+	background: #31c27c;
+	color: #fff;
+	text-decoration: none;
+	text-align: center;
+	font-size: 15px;
+}
+.singer_item_select:hover{
+   color: #31c27c;
+}
+.singer_tag_list_area{
+	padding-bottom: 3px;
+	height:auto;
+	width:1200px;
+	overflow: hidden;
+}
+.singer_tag_select_all{
+	float: left;
+	width: 44px;
+	height: 24px;
+	background: #31c27c;
+	color: #fff;
+	text-decoration: none;
+	text-align: center;
+	font-size: 15px;
+}
+.singer_tag_item{
+	height: 26px;
+	width: 50px;
+    float:left;
+    line-height: 27px;
+    padding: 0 8px;
+    margin:0 12px 14px 0; 
+    text-decoration: none;
+    text-align: center;
+    color: #000;
+}
+.singer_tag_item:hover{
+    color:#31c27c; 
+}
+.singer_sex_all{
+	float: left;
+	width: 44px;
+	height: 24px;
+	background: #31c27c;
+	color: #fff;
+	text-decoration: none;
+	text-align: center;
+	font-size: 15px;
+}
+.singer_tag_list_sex{
+	padding-bottom: 3px;
+	height:auto;
+	width:1200px;
+	overflow: hidden;
+}
+.singer_sex{
+	height: 26px;
+	width: 40px;
+    float:left;
+    line-height: 27px;
+    padding: 0 8px;
+    margin:0 12px 14px 0; 
+    text-decoration: none;
+    text-align: center;
+    color: #000;
+}
+.singer_sex:hover{
+	color: #31c27c;
+}
+.singer_tag_list_genre{
+	padding-bottom: 3px;
+	height:auto;
+	width:1200px;
+	overflow: hidden;
+}
+.singer_genre_all{
+	float: left;
+	width: 44px;
+	height: 24px;
+	background: #31c27c;
+	color: #fff;
+	text-decoration: none;
+	text-align: center;
+	font-size: 15px;
+}
+.singer_genre{
+	height: 26px;
+	width: 50px;
+    float:left;
+    line-height: 27px;
+    padding: 0 8px;
+    margin:0 12px 14px 0; 
+    text-decoration: none;
+    text-align: center;
+    color: #000;
+}
+.singer_genre:hover{
+	color: #31c27c;
+}

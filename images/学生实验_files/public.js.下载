@@ -1,0 +1,455 @@
+/**
+ * Created by 刘雨路 on 2016/6/6.
+ */
+
+/**
+ * @func
+ * @desc 密码框与初始化密码的禁用与开启
+ * @param {object} resetpass  重置密码(checkbox)
+ * @param {object} initpass   初始化密码(checkbox)
+ * @param {object} pass1      密码(input)
+ * @param {object} pass2      确认密码(input)
+ */
+function definedOrInitPass(resetpass, initpass, pass1, pass2) {
+    var $resetpass = $(resetpass);
+    var $initpass = $(initpass);
+    var $pass1 = $(pass1);
+    var $pass2 = $(pass2);
+    $resetpass.change(function () {
+        if ($(this).prop("checked")) {
+            $initpass.removeAttr("disabled");
+            $pass1.removeAttr("disabled");
+            $pass2.removeAttr("disabled");
+        }
+        else {
+            $pass1.attr("disabled", "disabled").val("").next().hide();
+            $pass2.attr("disabled", "disabled").val("").next().hide();
+            $initpass.prop("disabled", "disabled").removeAttr("checked");
+        }
+    });
+    $initpass.change(function () {
+        if ($(this).prop("checked")) {
+            $pass1.attr("disabled", "disabled").val("").next().hide();
+            $pass2.attr("disabled", "disabled").val("").next().hide();
+        }
+        else {
+            $pass1.removeAttr("disabled");
+            $pass2.removeAttr("disabled");
+        }
+    })
+}
+
+
+/**
+ * @func
+ * @desc 排序--改变箭头方向
+ * @param {object} pthis   当前点击对象
+ */
+function changeSort(th) {
+    if (th) {
+        var sort = th.find("i");
+        th.siblings().find("i").attr("class", "icon-sort");//除了当前的点击的排序箭头，其余的重置
+        if (sort.attr("class") == "icon-caret-up" || sort.attr("class") == "icon-sort") {
+            sort.attr("class", "icon-caret-down");
+        } else {
+            sort.attr("class", "icon-caret-up");
+        }
+    }
+}
+
+/**
+ * @func
+ * @desc 清空数据
+ * @param {object} mydata  数据对象
+ */
+function emptyMydata(mydata) {
+    for (var i in mydata) {
+        if (typeof mydata[i] == "object") {
+            emptyMydata(mydata[i])
+        } else {
+            mydata[i] = "";
+        }
+    }
+    return mydata;
+}
+
+/**
+ * @func
+ * @desc 显隐查询条件
+ * @param {object} select   select对象
+ * @param {object} box      需要显隐的对象
+ */
+/*function changeSearchCondition(select, box, fun, mydata, mytable) {
+    select.change(function () {
+        if (this.value == "show") {
+            box.show();
+        } else {
+            box.hide();
+            mydata.page.currPage = "1";
+            mydata.page.pageIndex = "";
+            mydata.sort.sortOrder = "";
+            mydata.sort.sortName = "";
+            emptyCondition(box);
+            if (mytable == undefined || mytable == "") {
+                $(".mytable").find("th i").attr("class", "icon-sort");
+            } else mytable.find("th i").attr("class", "icon-sort");
+            fun(false,true);
+        }
+    })
+}*/
+
+/**
+ * @func
+ * @desc  表格的全选和单选
+ * @param {object} tab     表格对象
+ */
+function checkSelect(tab) {
+    tab.delegate("input", "change", function () {
+        var checkall = tab.find("input[type=checkbox]").eq(0);
+        var checks = tab.find("input[type=checkbox]:enabled").not(checkall);
+        if ($(this).parent().is("th")) {   /*是否点击的是全选*/
+            /*根据当前的checkbox的true、false值，改变所有的checkbox的值并切换tr的背景色*/
+            var tf = $(this).prop("checked");
+            checks.prop("checked", tf).parents("tr").toggleClass("ischecked", tf);
+        } else {
+            $(this).parents("tr").toggleClass("ischecked");
+            if ((tab.find("tbody :checkbox:checked")).length == checks.length) {
+                checkall.prop("checked", true);
+            } else {
+                checkall.prop("checked", false);
+            }
+        }
+    })
+}
+
+/**
+ * @func
+ * @desc  清空
+ * @param {object} contditionBox   装条件的容器
+ */
+function emptyCondition(contditionBox) {
+    contditionBox.find("input[type=text]").each(function () {
+        this.value = "";
+    });
+    contditionBox.find("select").each(function () {
+        this.value = "";
+    });
+}
+
+/**
+ * @fun
+ * @description 分页参数
+ * @param {object} pager 分页参数
+ * @param {object} fun   分页点击后执行的方法
+ */
+function setPaginator(pager, fun) {
+    var options = {
+        alignment: "center",
+        size: 'normal',
+        currentPage: pager.currPage,
+        totalPages: Math.ceil(pager.totals / pager.pageSize),
+        numberOfPages: 8,
+        itemTexts: function (type, page, current) {
+            switch (type) {
+                case "first":
+                    return "首页";
+                case "prev":
+                    return "前一页";
+                case "next":
+                    return "下一页";
+                case "last":
+                    return "尾页";
+                case "page":
+                    return page;
+            }
+        },
+        onPageClicked: fun
+    }
+    return options;
+}
+
+/**
+ * @fun
+ * @description 分页显示
+ * @param {object} node  分页容器
+ * @param {object} pager 分页参数
+ * @param {object} fun   分页点击后执行的方法
+ */
+function showPaginator(node, pager, fun) {
+    if (parseInt(pager.totals) <= parseInt(pager.pageSize)) {
+        $(node).empty().hide();
+    } else {
+        $(node).empty().show().bootstrapPaginator(setPaginator(pager, fun))
+    }
+}
+
+
+/**
+ * @func
+ * @desc   表单正则验证
+ * @param {string} val   需验证的值
+ * @param {object} reg   正则表达式
+ * @param {object} tip   验证提示
+ * @param {string} tips  需要提示的信息
+ */
+function regexp(val, reg, tip, tips) {
+    if (val == "") {
+        tip.text("必填").show();
+        return false;
+    } else if (reg.test(val)) {
+        tip.text(tips).show();
+        return false;
+    } else {
+        tip.text(tips).hide();
+        return true;
+    }
+}
+
+/**
+ * @func
+ * @desc   密码验证
+ * @param {object} pass1   密码
+ * @param {object} pass2   确认密码
+ */
+function provingPass(pass1, pass2) {
+    if (pass1.val() == "") {
+        pass1.next().show();
+        return false;
+    } else if (pass2.val() == "") {
+        pass1.next().hide();
+        pass2.next().text("请输入密码").show();
+        return false;
+    } else if (pass1.val() == pass2.val()) {
+        pass1.next().hide();
+        pass2.next().hide();
+        return true;
+    } else {
+        pass1.next().hide();
+        pass2.next().text("两次密码不一致").show();
+        return false;
+    }
+}
+
+/**
+ * @func
+ * @desc 树形菜单显示隐藏
+ */
+function mytree(wrap) {
+    wrap.delegate("i", "click", function () {
+        var $this = $(this);
+        $this.toggleClass("treeup").toggleClass("treedown");
+        $this.parents("li").children("ul").toggle();
+    })
+}
+
+/**
+ * @func
+ * @desc 禁用提示title
+ * @param {string} tip 要提示的信息
+ */
+function shotitle(tip) {
+    $(".mytitlebtn").mouseover(function () {
+        if (tip) {
+            $(".mytitle").text(tip);
+        } else {
+            $(".mytitle").text("不可操作");
+        }
+        $(this).mousemove(function () {
+            $(".mytitle").fadeIn("linear").css({left: event.pageX - 140, top: event.pageY})
+        })
+    }).mouseout(function () {
+        $(".mytitle").fadeOut("linear")
+    })
+}
+
+
+/**
+ * @func
+ * @desc 学生端禁用提示title
+ * @param {string} tip 要提示的信息
+ */
+function shotitle2(tip) {
+    $(".base-cont").delegate(".mytitlebtn", "mouseover mouseout", function (event) {
+        if (event.type == "mouseout") {
+            $(this).next().stop().fadeOut("linear");
+        } else {
+            if (tip) {
+                $(this).next().text(tip).stop().fadeIn("linear");
+            } else {
+                $(this).next().text("不可操作").stop().fadeIn("linear");
+            }
+            // $(this).mousemove(function(e){
+            //     $(this).next().fadeIn("linear").css({left:0,top:0})
+            // })
+        }
+    })
+    $(".base-cont").delegate("[attr=3]", "mouseover mouseout", function (event) {
+        if (event.type == "mouseout") {
+            $(this).next().stop().fadeOut("linear");
+        } else {
+                $(this).next().text("未开始").stop().fadeIn("linear");
+        }
+    })
+}
+
+/**
+ * @func
+ * @desc js获取url参数值
+ * @param {string} paras 参数名称
+ */
+function request(paras) {
+    var i = 0, j;
+    var url = location.href;
+    var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
+    var paraObj = {};
+    for (i; j = paraString[i]; i++) {
+        paraObj[j.substring(0, j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=") + 1, j.length);
+    }
+    var returnValue = paraObj[paras.toLowerCase()];
+    if (typeof (returnValue) == "undefined") {
+        return "";
+    } else {
+        return returnValue;
+    }
+}
+
+
+/*字符转义---编码*/
+function htmlEncode(html) {
+    //1.首先动态创建一个容器标签元素，如DIV
+    var temp = document.createElement("div");
+    //2.然后将要转换的字符串设置为这个元素的innerText(ie支持)或者textContent(火狐，google支持)
+    (temp.textContent != undefined ) ? (temp.textContent = html) : (temp.innerText = html);
+    //3.最后返回这个元素的innerHTML，即得到经过HTML编码转换的字符串了
+    return temp.innerHTML;
+}
+
+/*字符转义---解码*/
+function htmlDecode(text) {
+    //1.首先动态创建一个容器标签元素，如DIV
+    var temp = document.createElement("div");
+    //2.然后将要转换的字符串设置为这个元素的innerHTML(ie，火狐，google都支持)
+    temp.innerHTML = text;
+    //3.最后返回这个元素的innerText(ie支持)或者textContent(火狐，google支持)，即得到经过HTML解码的字符串了。
+    return temp.innerText || temp.textContent;
+}
+
+
+function getToday() {
+    var d = new Date($.ajax({async: false}).getResponseHeader("Date"));
+    var year = d.getFullYear();
+    var month = d.getMonth() + 1; // 记得当前月是要+1的
+    month = month < 10 ? ("0" + month) : month;
+    var dt = d.getDate();
+    dt = dt < 10 ? ("0" + dt) : dt;
+    var today = year + "-" + month + "-" + dt;
+    return today;
+}
+
+function handleNull(str) {
+    return str == null ? "--" : str;
+}
+
+function compareCalendar(beginTime, endTime, currDate) {
+    if (typeof currDate != 'undefined') {
+        var today = currDate;
+    } else {
+        today = getToday().toString();
+    }
+    if (beginTime.localeCompare(today) > 0)
+        return 3;
+    else if (endTime.localeCompare(today) < 0)
+        return 2;
+    else
+        return 1;
+
+}
+
+function clearTableHeadChecked(tab) {
+    tab.find("thead :checkbox").prop("checked", false);
+}
+
+function zeroTwo(str, conom, unit, length) {
+    if (str != '' || str != null) {
+        str = str / conom;
+        str = str.toString();
+        str = str.substring(0, (str.indexOf('.') + length)) + unit;
+        return str;
+    } else {
+        str = 0 + 'M';
+        return str;
+    }
+}
+/**
+ * @desc 文件大小单位自适应
+ * @param size byte
+ * @returns {string}
+ */
+function convertFileSize(size) {
+    var kb = 1024;
+    var mb = kb * 1024;
+    var gb = mb * 1024;
+    if (size >= gb) {
+        return (size * 1.0 / gb).toFixed(1) + "GB";
+    } else if (size >= mb) {
+        return (size * 1.0 / mb).toFixed(1) + "MB";
+    } else if (size >= kb) {
+        return (size * 1.0 / kb).toFixed(1) + "KB";
+    } else
+        return size + 'B';
+}
+
+
+/**
+ * @desc 时间转换（秒转换成时分秒)
+ * @param second_time
+ * @returns {string}
+ */
+
+function convertTime( second_time ){
+    if(second_time == null){
+        return '--';
+    }
+    var time = parseInt(second_time) + "秒";
+    if( parseInt(second_time )> 60){
+        var second = parseInt(second_time) % 60;
+        var min = parseInt(second_time / 60);
+        time = min + "分" + second + "秒";
+        if( min > 60 ){
+            min = parseInt(second_time / 60) % 60;
+            var hour = parseInt( parseInt(second_time / 60) /60 );
+            time = hour + "小时" + min + "分" + second + "秒";
+            if( hour > 24 ){
+                hour = parseInt( parseInt(second_time / 60) /60 ) % 24;
+                var day = parseInt( parseInt( parseInt(second_time / 60) /60 ) / 24 );
+                time = day + "天" + hour + "小时" + min + "分" + second + "秒";
+            }
+        }
+    }
+    return time;
+}
+
+/*判断编辑器字数超出*/
+function maxworld(taskEditor,btn){
+    var contlen = taskEditor.getContentLength(false);//编码数
+    var contlenw = taskEditor.getContentLength(true);//字数
+    var maxlen =  taskEditor.options.maximumWords;
+    if(contlenw>maxlen||contlen>maxlen*10){
+        if(contlen>maxlen*10){
+            btn.attr({"disabled":"disabled","title":"HTML编码超出最大限制"});
+        }else btn.attr({"disabled":"disabled","title":"字数超出最大限制"});
+    }else btn.attr({"title":""}).removeAttr("disabled");
+}
+
+/*重置videojs样式*/
+function resetVideoStyle(){
+    $(".video-js").removeClass("vjs-has-started");/*显示大播放按钮*/
+    // $(".vjs-loading-spinner").hide();             /*隐藏loading动画*/
+    $(".vjs-poster").show();                      /*显示遮罩*/
+
+    /*给遮罩和大播放按钮绑定点击事件，点击后隐藏大播放按钮并显示功能栏*/
+    $(".vjs-big-play-button,.vjs-poster").click(function(){
+        $(".video-js").addClass("vjs-has-started");
+    })
+}
+

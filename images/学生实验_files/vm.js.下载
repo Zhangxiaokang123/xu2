@@ -1,0 +1,969 @@
+/**
+ * Created by 刘雨路 on 2016/8/5.
+ */
+
+/*获取地址中的id*/
+var teuid = encodeURI(request("teuid"));//拓扑实例topoExampleUId--uid
+var topoId = encodeURI(request("topoId"));
+var taskId = encodeURI(request("taskId"));
+var courseId = encodeURI(request("courseId"));
+var runip = encodeURI(request("runip"));
+var vm_token = encodeURI(request("token"));
+var vnc_pwd = encodeURI(request("pwd"));
+var vnc_port = encodeURI(request("port"));
+var noVm = true; //首次加载，没有选择虚机，重置虚机按钮禁掉
+if(runip && vm_token && vnc_pwd && vnc_port)
+{
+    $(".kvm-left iframe").attr("src", '/student/studentCourse/createVnc?host=' + runip + '&port=' + vnc_port + '&password=' + vnc_pwd + '&token=' + vm_token);
+}else {
+    $(".kvm-left iframe").attr("src", '/student/studentCourse/createVnc');
+}
+var taskEditor = UE.getEditor('start-cont3-editor', {
+    initialFrameHeight: 400,
+    autoHeightEnabled: false,
+    readonly : true
+});
+
+taskEditor.addListener('contentChange',function(){
+    maxworld(taskEditor,$(".notesubmit .kvm-button"))
+});
+
+/*播放器初始化*/
+var myPlayer = videojs("example_video_1", {width: "100%", height: 300});
+
+/*滚动条参数*/
+var scrollbar_top;
+$(".kvm-detail").mCustomScrollbar({
+    scrollButtons: {enable: true},
+    theme: "light-thick",
+    scrollInertia: 300,
+    // advanced:{ updateOnContentResize: false },
+    callbacks:{
+        onBeforeUpdate:function(){
+            $(".kvm-detail").mCustomScrollbar('scrollTo',scrollbar_top,{
+                scrollInertia:0
+            });
+        },
+        whileScrolling:function(){
+            scrollbar_top = this.mcs.top;
+        }
+    }
+});
+$(".kvm-list").mCustomScrollbar({
+    scrollButtons: {enable: true},
+    theme: "light-thick",
+    scrollInertia: 300
+});
+
+/*导航*/
+$(".kvm-nav>li").click(function () {
+    var $this = $(this);
+    $(".kvm-nav>li").removeClass("kvmactive");
+    $this.addClass("kvmactive");
+    $(".kvm-cont>li").hide().eq($this.index()).show();
+});
+
+/*鼠标拖动改变窗口大小*/
+var move;   //是否执行移动
+$("#movebar").mousedown(function (e) {
+    var leftw = $(".kvm-left").width();
+    var rightw = $(".kvm-right").width();
+    var mousestart = e.pageX;
+    var mouseend;
+    move = true;
+    $("body").append("<div class='mf' style='position:absolute;width:100%;" +
+        "height:100%;top:0;z-index:9999;cursor:w-resize'></div>")
+    /*随着鼠标的移动改变内容宽度*/
+    $(document).mousemove(function (event) {
+        if (move && event.button == 0) {         //当鼠标左键按下
+            mouseend = event.pageX;
+            if (mousestart < mouseend) {         //向右拖动
+                if (rightw >= 10) {                  //最小留一个px，防止页面错位
+                    $(".kvm-left").css("width", leftw + mouseend - mousestart);
+                    leftw = leftw + mouseend - mousestart;
+                    $(".kvm-right").css("width", rightw - mouseend + mousestart);
+                    rightw = rightw - mouseend + mousestart;
+                }
+                if (rightw < 10){
+                    $(".kvm-right").css("width", 10);
+                    $(".kvm-left").css("width", $(window).width()-10);
+                }
+            } else if (mousestart > mouseend) {   //向左拖动
+                if (leftw >= 1) {                     //最小留一个px，防止页面错位
+                    $(".kvm-left").css("width", leftw - mousestart + mouseend);
+                    leftw = leftw - mousestart + mouseend;
+                    $(".kvm-right").css("width", rightw + mousestart - mouseend);
+                    rightw = rightw + mousestart - mouseend;
+                }
+                if (leftw < 1){
+                    $(".kvm-left").css("width", 0);
+                    $(".kvm-right").css("width", $(window).width());
+                }
+            }
+            mousestart = mouseend;
+            if($(".kvm-left").width() > $(window).width()){
+                $(".kvm-left").width($(window).width()-10);
+                $(".kvm-right").width(-10);
+            }
+            if($(".kvm-right").width() > $(window).width()){
+                $(".kvm-right").width($(window).width());
+                $(".kvm-left").width(0);
+            }
+        }
+    })
+});
+
+/*鼠标没有按下的时候，不变化宽度*/
+$(document).mouseup(function () {
+    $(".mf").remove();
+    move = false;
+});
+
+/*窗口变化则自动宽度*/
+$(window).resize(function () {
+    $(".kvm-left").width("70%");
+    $(".kvm-right").width("30%");
+});
+
+/*返回我的课程--内容列表*/
+$(".back_test").click(function(){
+    $.confirm({
+        message: '<p style="height:20px">返回实验列表，10分钟不继续实验虚机将自动关机！</p>',
+        okText: "确定",
+        cancelText: "取消",
+        onOk: function () {
+            if($(".stop").css("display") != 'none'){
+                $.ajax({
+                    type: "get",
+                    url: "/student/studentCourse/stopVideo",
+                    data: {'vmToken': vm_token},
+                    datatype: "json",
+                    success: function (state) {
+                        if (state.status == 1) {
+                            location.href = window.localStorage.stu_start_url;
+                        }else{
+                            $("body").xTip({
+                                type: "warning",
+                                message: state.error.msg
+                            });
+                        }
+                    },error:function(){
+                        $("body").xTip({
+                            type: "warning",
+                            message: "返回失败，停止录制视频时出错！"
+                        });
+                    }
+                });
+            }else location.href = window.localStorage.stu_start_url;
+        }
+    });
+});
+
+/*提交笔记*/
+$(".kvm-right").delegate('.kvm-button', 'click', function () {
+    $.ajax({
+        type: "post",
+        url: "/student/studentCourse/updTaskNote",
+        data: {
+            'teuid':teuid,
+            'vmToken':vm_token,
+            'courseId': courseId,
+            'taskId': taskId,
+            'taskNote': taskEditor.getContent(),
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.status == 1) {
+                $("body").xTip({
+                    type: "success",
+                    message: "更新笔记成功!"
+                });
+            }
+            else {
+                $("body").xTip({
+                    type: "warning",
+                    message: data.error.msg
+                });
+            }
+        }
+    });
+});
+setInterval(checkStudentSession, 60000);//定时检测session是否存活
+/*请求数据-详细参考、实验笔记、实验视频*/
+
+/**
+ * @func
+ * @desc 加载虚机
+ * @param {boolean} type 首次加载
+ */
+var lodvm_data;
+function lodding_vm(upnote,refvm,back){
+    $.ajax({
+        type: "post",
+        url: "/student/studentCourse/loadVmPageInfo",
+        data: {'taskId': taskId, 'courseId': courseId,'vmToken':vm_token},
+        dataType: "json",
+        success: function (redata) {
+            lodvm_data = redata.datas;
+            if (redata.status == 1) {
+                /*更新笔记*/
+                if(upnote){
+                    ueditEnb(lodvm_data);
+                }
+
+                /*渲染虚机列表*/
+                if(lodvm_data.vmparentList.length > 0 && refvm){
+                    $(".kvm-detail .mCSB_container").html(lodvm_data.taskRefer);
+                    new Viewer(document.getElementById('mCSB_1_container'), {
+                        title:false,//关闭名称
+                        loop:true,
+                        filter:function(img){
+                            if(img.getAttribute("src") != null && img.getAttribute("src") != ""){
+                                return img.getAttribute("src")
+                            }
+                        },
+                        shown:function(){
+                            $(".kvm-detail").mCustomScrollbar("disable");
+                        },
+                        hidden:function(){
+                            $(".kvm-detail").mCustomScrollbar("update");
+                        }
+                    });
+                    myPlayer.ready(function () {
+                        this.src({type: "video/mp4", src: lodvm_data.videoSrc});
+                    });
+                    var html = "";
+                    $.each(lodvm_data.vmparentList, function (index) {
+                        html +='<div class="computerbox" data-url='+this.unique_id+'>'+
+                            '<div class="kvm_name" title="'+this.vmparent_name+'">'+this.vmparent_name+'</div>'+
+                            '<div class="kvm_status">状态：'+ getVmStatus(index) +'</div>'+
+                            '</div>';
+                    });
+                    $(".kvm-list .mCSB_container").html(html);
+                }
+
+                /*判断是否返回之前的实验的虚机，并给予选中状态*/
+                if(back && back != ""){
+                    var boxs = $(".computerbox");
+                    for(var i in boxs){
+                        if(boxs.eq(i).attr("data-url") == back){
+                            boxs.eq(i).addClass("computer-active").find(".kvm_status").text("状态：开启");
+                        }
+                    }
+                }
+            } else if (redata.error.msg) {
+                $("body").xTip({
+                    type: "warning",
+                    message: redata.error.msg
+                });
+            }
+        },
+        error: function (XMLHttpRequest, textStatus) {
+            $("body").xTip({
+                type: "warning",
+                message: "获取失败！status:" + XMLHttpRequest.status + ", readyState:" + XMLHttpRequest.readyState + ", extStatus:" + textStatus
+            });
+        }
+    });
+}
+
+var vmstatus = [];
+function getVmStatus(index){
+    if(vmstatus.length == 0){
+        return '关闭';
+    }else if (vmstatus[index] == 'running'){
+        return '开启';
+    }else{
+        return '关闭';
+    }
+}
+
+/*给虚拟机列表绑定事件*/
+$(".kvm-list").on("click",".computerbox",function(e){
+    e.preventDefault();
+    var $this = $(this);
+    if($this.hasClass("computer-active")){return;}
+    isstartvm($this);
+});
+
+function isstartvm($vm){
+    $.ajax({
+        type: "post",
+        url: "/student/studentCourse/ischeckHasOldVm",
+        data: {
+            "topoExampleUid": teuid,
+            "vmParentAloneid":$vm.attr("data-url"),
+            'courseId':courseId,
+            'taskId':taskId,
+            'topoId':topoId
+        },
+        success: function (msg) {
+            if (msg.status == 1) {
+                if(msg.datas.isold == 1){
+                    $.confirm({
+                        message: "您当前已经开启了其他虚拟机，是否结束并放弃之前开启的虚拟机？",
+                        okText: "回到之前的虚拟机",
+                        cancelText: "放弃并开启本虚拟机",
+                        onOk: function () {
+                            startvm($vm)
+                        },
+                        onCancel: function () {
+                            startvm($vm,1);
+                        }
+                    });
+                }else{
+                    startvm($vm);
+                }
+            } else {
+                $("body").xTip({type:"warning", message:msg.error.msg});
+            }
+        },
+        error: function () {
+            $("body").xTip({type:"warning", message:"网络错误！"});
+        }
+    });
+}
+
+function ueditEnb(data){
+    taskEditor.ready(function () {
+        var taskNote = data.taskNote == null ? '' : data.taskNote;
+        taskEditor.setContent(taskNote);
+        taskEditor.setEnabled();
+    });
+}
+
+function startvm($vm,op){
+    $.ajax({
+        type: "post",
+        url: "/student/studentCourse/checkHasOldVm",
+        data: {
+            "topoExampleUid": teuid,
+            "vmParentAloneid":$vm.attr("data-url"),
+            'courseId':courseId,
+            'taskId':taskId,
+            'topoId':topoId,
+            'op':op||""
+        },
+        success: function (msg) {
+            if (msg.status == 1) {
+                noVm = false;
+                $vm.addClass("computer-active").find(".kvm_status").text("状态：开启");
+                $vm.siblings().removeClass("computer-active");
+                if(msg.datas.isold == 0 && !op){ //第一次没有开启其它虚机
+                    runip = msg.datas.now.run_at_ip;
+                    vm_token = msg.datas.now.token;
+                    vnc_pwd = msg.datas.now.vnc_password;
+                    vnc_port = msg.datas.now.vnc_port;
+                    lodding_vm(true,false);
+                    window.localStorage.stu_id = msg.datas.now.student_id;
+                    stime(msg.datas.now.start_time);
+                }
+                if(msg.datas.isold == 1 && op == 1){ //有开启其它虚机，而且要把原来的关闭
+                    runip = msg.datas.now.run_at_ip;
+                    vm_token = msg.datas.now.token;
+                    vnc_pwd = msg.datas.now.vnc_password;
+                    vnc_port = msg.datas.now.vnc_port;
+                    lodding_vm(true,false);
+                    window.localStorage.stu_id = msg.datas.now.student_id;
+                    stime(msg.datas.now.start_time)
+                }
+                if(msg.datas.isold == 1 && !op){  //有开启其它虚机，回到原来的
+                    var olds = msg.datas.old;
+                    var running_t = true;
+                    var unique_id = "";
+                    for(var i = 0;i<olds.length;i++){
+                        if(olds[i].vm_current_state == "running" && running_t){
+                            runip = msg.datas.old[i].run_at_ip;
+                            teuid = msg.datas.old[i].tuid;
+                            vnc_port = msg.datas.old[i].vnc_port;
+                            vnc_pwd = msg.datas.old[i].vnc_password
+                            taskId = msg.datas.old[i].taskId;
+                            courseId = msg.datas.old[i].courseId;
+                            vm_token = msg.datas.old[i].token;
+                            topoId = msg.datas.old[i].topo_id;
+                            unique_id = msg.datas.old[i].unique_id;
+                            running_t = false;
+                        }
+                        vmstatus.push(olds[i].vm_current_state)
+                    }
+                    window.localStorage.stu_id = msg.datas.old[0].student_id;
+                    lodding_vm(true,true,unique_id);
+                    stime(msg.datas.old[0].start_time);
+
+                }
+                $(".kvm-left iframe").attr("src", '/student/studentCourse/createVnc?host=' + runip + '&port=' + vnc_port + '&password=' + vnc_pwd + '&token=' + vm_token);
+
+                function stime(time){
+                    if(time != "" && time>0){
+                        var rtime = 3000000 + Number(time) - new Date().getTime();
+                        if(rtime > 0 ){
+                            Endtime = "";
+                            tipend = true;
+                            clearTimeout(ctime);
+                            rtime > 600000?tipmin = true:tipmin = false;
+                            ctime = setInterval(function(){getRTime("count_down",rtime,0,10)},1000);
+                            setTimeout(startState,1000);//开始录制的状态，延迟1000毫秒执行
+                        }
+                    }else{
+                        resetRecord();
+                        noStartState();
+                    }
+                }
+            } else {
+                $("body").xTip({type:"warning", message:msg.error.msg});
+            }
+        },
+        error: function () {
+            $("body").xTip({type:"warning", message:"网络错误！"});
+        }
+    });
+}
+
+/*截屏*/
+function jtset() {
+    var ifra = document.getElementById('vmiframe').contentWindow;
+    html2canvas(ifra.document.getElementById("noVNC_canvas"),{
+        onrendered: function(canvas) {
+            $.ajax({
+                type: "post",
+                url: "/student/studentCourse/base64toImage",
+                data: {imageSrc: canvas.toDataURL("image/png")},  //64base编码格式的图片
+                datatype: "json",
+                success: function (redata) {
+                    taskEditor.execCommand('insertimage', {
+                        src: redata.datas.imgSrc,
+                    });
+                }
+            })
+        }
+    });
+}
+function checkStudentSession() {
+    $.ajax({
+        type: "post",
+        url: "/student/studentCourse/checkSessionIsAlive",
+        data: {"token": vm_token, "port": vnc_port, "pwd": vnc_pwd},
+        datatype: "json",
+        success: function (msg) {
+            if (msg.status != 1) {
+                alert('会话已过期');
+                self.location.href = '/base/user';
+            }
+        }
+    });
+}
+
+/**
+ * @func
+ * @desc 录制视频计时方法
+ * @param {string} divid     显示时间的元素id
+ * @param {string} time      倒计时时间（默认分钟）
+ * @param {string} timetype  时间类型（0：毫秒，1：秒，2：分钟）
+ * @param {string} tiptime   剩余提示时间（分钟）
+ */
+var Endtime = ""; /*结束的时间*/
+var tipmin = true;/*剩余提示*/
+var tipend = true;/*结束倒计时*/
+function getRTime(divid,time,timetype,tiptime){
+    var mms;
+    switch(Number(timetype)){
+        case 0:mms = time;break;
+        case 1:mms = time*1000;break;
+        case 2:mms = time*60000-1000;break;
+    }
+    if(Endtime == "") Endtime = new Date().getTime() + mms;
+    var Nowtime = new Date().getTime();
+    var t = Endtime - Nowtime;
+    var d=00;
+    var h=00;
+    var m=00;
+    var s=00;
+    var tt = Number(tiptime*60000);
+    if(t>=0){
+        m = Math.floor(t/1000/60%60);
+        s = Math.floor(t/1000%60);
+        h = Math.floor(t/1000/60/60%24);
+        d = Math.floor(t/1000/60/60/24);                  //天
+        h.toString().length > 1 ? h = h:h = "0" + h;      //时
+        m.toString().length > 1 ? m = m:m = "0" + m;      //分
+        s.toString().length > 1 ? s = s:s = "0" + s;      //秒
+    }
+    if(tipmin && t <= tt){                    /*倒计时过程中提示*/
+        $(".modal-bg,.conf2").fadeIn("fast");
+        tipmin =false;
+    }
+    if(tipend && t <= 0){                     /*倒计时结束提示*/
+        clearTimeout(ctime);
+        autoStopVideo();
+        resetRecord();
+        noStartState();
+        return false;
+    }
+    document.getElementById(divid).innerHTML = h + "时" + m + "分" + s + "秒";
+}
+
+/**
+ * @func
+ * @desc 到点自动提交视频
+ */
+function autoStopVideo(){
+    $.ajax({
+        type: "get",
+        url: "/student/studentCourse/stopVideo",
+        data: {'vmToken': vm_token},
+        datatype: "json",
+        success: function (state) {
+            if (state.status == 1) {
+                $("body").xTip({
+                    type: "success",
+                    message: "录制完成！"
+                });
+                showHideSubTip(1,true);
+            }else{
+                $("body").xTip({
+                    type: "warning",
+                    message: state.error.msg
+                });
+            }
+        },
+        error:function(){
+            $("body").xTip({
+                type: "warning",
+                message: "网络错误！"
+            });
+        }
+    })
+}
+
+/**
+ * @desc 录制按钮点击
+ */
+var ctime;/*定时器对象*/
+$(".record button").click(function(){
+    if($(this).hasClass("start")){
+        playRecord();
+        setTimeout(function(){
+            $("#vmiframe")[0].contentWindow.sendCtrlAltDFD();
+        },1000);
+        setTimeout(function(){
+            $("#vmiframe")[0].contentWindow.sendF5();
+        },2000);
+        setTimeout(function(){
+            $("#vmiframe")[0].contentWindow.sendCtrlAltDFD();
+        },3000);
+    }else if($(this).hasClass("stop")){
+        stopRecord(0)
+    }else if($(this).hasClass("submit")){
+        stopRecord(1)
+    }else if($(this).hasClass("remove")){
+        removeRecord()
+    }
+})
+
+/*关闭虚机、发送Ctrl+alt+del、截屏、重置虚机*/
+$(".vmheader button").click(function(){
+    if($(this).hasClass("reset_kvm")){
+        resetkvm();
+    }else if($(this).hasClass("close_kvm")){
+        closeMyconf($(".conf3"),true);
+    }else if($(this).hasClass("shareDesk")){
+        $(".conf4").show();
+        var preUrl = location.href.substring(0,location.href.indexOf("student\/studentCourse") -1);
+        var shareUrl = preUrl+'/base/user/createShareVnc?host=' + runip + '&port=' + vnc_port + '&password=' + vnc_pwd + '&token=' + vm_token;
+        $(".conf4 .shareUrl").val(shareUrl);
+        //http://192.168.200.156/base/user/createShareVnc?host=""&port=""&password=""&token=""
+    }else if($(this).hasClass("screen_capture")){
+        jtset();
+    }else if($(this).hasClass("send_altdel")) {
+        $("#vmiframe")[0].contentWindow.sendCtrlAltDel();
+    }
+})
+
+/**
+ * @desc 录制视频定时的弹窗关闭
+ */
+$(".conf2 button").click(function(){
+    $(".modal-bg,.conf2").fadeOut("fast");
+})
+
+/**
+ * @func
+ * @desc 重置录制状态
+ */
+function resetRecord(){
+    $("#count_down").text("00时50分00秒");
+    Endtime = "";
+    tipmin = true;
+    tipend = true;
+    clearTimeout(ctime);
+}
+
+/**
+ * @func
+ * @desc 开始录制按钮状态
+ */
+function startState(){
+    $(".remove").attr("disabled",false);
+    $(".record .stop").show().attr("disabled",false);
+    $(".record .start").hide();
+    $(".down_time").show();
+    showHideSubTip(0,true);
+}
+
+/**
+ * @func
+ * @desc 未开始录制按钮状态
+ */
+function noStartState(type){
+    // type == true?$(".submit").attr("disabled",true):$(".remove,.submit").attr("disabled",true);/*提交按钮的判断*/
+    // $(".remove").attr("disabled",true);
+    $(".record .stop").hide();
+    $(".record .start").show();
+    $(".down_time").hide();
+    setTimeout(function(){
+
+        // $(".record .manage-btn").attr("disabled",false)
+    },1000)
+    showHideSubTip(0,false);
+}
+
+/**
+ * @func
+ * @desc 禁用按钮
+ */
+function disabledBtns(type){
+    if(type){
+        $(".vmheader .manage-btn:not(.back_test)").attr("disabled",type);
+    }else{
+        $(".vmheader .manage-btn").attr("disabled",type);
+    }
+    window.localStorage.removeVm  ==  "true" || noVm == true?$(".vmheader .reset_kvm").attr("disabled",true):$(".vmheader .reset_kvm").attr("disabled",false);
+}
+
+/**
+ * @func
+ * @desc 提交、未提交的显隐
+ * @param {number} type 类名
+ * @param {boolean} showHide 显隐
+ */
+function showHideSubTip(type,showHide){
+    var arrClass = [{text:"未提交",class:"icon-remove"},{text:"已提交",class:"icon-ok"}];
+    $(".subvideo").toggle(showHide).find("i").attr("class",arrClass[type].class).text(arrClass[type].text);
+}
+
+/**
+ * @func
+ * @desc 开始录制状态
+ */
+function startVideo(vmToken,courseId,taskId) {
+    $.ajax({
+        type: "get",
+        url: "/student/studentCourse/recordVideo",
+        data: {
+            'vmToken': vmToken,
+            'courseId': courseId,
+            'taskId': taskId
+        },
+        datatype: "json",
+        success: function (data) {
+            if(data.status == 1){
+                $("body").xTip({
+                    type: "success",
+                    message: "开始录制!"
+                });
+                // var gtimes = JSON.parse(window.localStorage.videoTimes);
+                // gtimes[$(".computer-active").index()].stime = new Date().getTime();
+                // window.localStorage.videoTimes = JSON.stringify(gtimes);
+                startState();
+                ctime = setInterval(function(){getRTime("count_down",50,2,10)},1000);
+            }else{
+                $("body").xTip({
+                    type: "warning",
+                    message: data.error.msg
+                });
+            }
+        },
+        error:function(){
+            $("body").xTip({
+                type: "warning",
+                message: "网络错误！"
+            });
+        }
+    })
+}
+
+/**
+ * @func
+ * @desc 开始录制--判断是否已经存在
+ */
+function playRecord(){
+    $.ajax({
+        type: "get",
+        url: "/student/studentCourse/checkHasVideo",
+        data: {'vmToken': vm_token},
+        datatype: "json",
+        success: function (state) {
+            if (state.status == 0) {
+                $.confirm({
+                    message: "该虚机已经存在视频文件，是否删除重新录制!",
+                    okText: "确定",
+                    cancelText: "取消",
+                    onOk: function () {
+                        startVideo(vm_token,courseId,taskId);
+                    },
+                    onCancel: function () {
+                        return false;
+                    }
+                });
+            }else if(state.status == 1){
+                startVideo(vm_token,courseId,taskId);
+            }else{
+                $("body").xTip({
+                    type: "warning",
+                    message: state.error.msg
+                });
+            }
+        },
+        error:function(){
+            $("body").xTip({
+                type: "warning",
+                message: "网络错误！"
+            });
+        }
+    })
+}
+
+/**
+ * @func
+ * @desc 停止录制视频
+ */
+function stopRecord(type){
+    var arr = [
+        {tip:"停止录制！",confirm:"确定要停止录制吗？（停止后自动提交）"},
+        {tip:"提交成功！",confirm:"确定要提交视频吗？"},
+    ]
+    $.confirm({
+        message: arr[type].confirm,
+        okText: "确定",
+        cancelText: "取消",
+        onOk: function () {
+            $.ajax({
+                type: "get",
+                url: "/student/studentCourse/stopVideo",
+                data: {'vmToken': vm_token},
+                datatype: "json",
+                success: function (state) {
+                    if (state.status == 1) {
+                        $("body").xTip({
+                            type: "success",
+                            message: arr[type].tip
+                        });
+                        noStartState();
+                        resetRecord();
+                        showHideSubTip(1,true);
+                        $(".manage-btn.remove").attr("disabled",false);
+                    }else{
+                        $("body").xTip({
+                            type: "warning",
+                            message: state.error.msg
+                        });
+                    }
+                },
+                error:function(){
+                    $("body").xTip({
+                        type: "warning",
+                        message: "网络错误！"
+                    });
+                }
+            });
+        },
+        onCancel: function () {
+            return false;
+        }
+    });
+}
+
+/**
+ * @func
+ * @desc 删除录制视频
+ */
+function removeRecord(){
+    $.confirm({
+        message: "确定要删除视频吗？",
+        okText: "确定",
+        cancelText: "取消",
+        onOk: function () {
+            $.ajax({
+                type: "get",
+                url: "/student/studentCourse/delVideo",
+                data: {'vmToken': vm_token},
+                datatype: "json",
+                success: function (state) {
+                    if (state.status == 1) {
+                        $("body").xTip({
+                            type: "success",
+                            message: "删除成功!"
+                        });
+                        noStartState();
+                        showHideSubTip(0,false);
+                        resetRecord();
+                    }else{
+                        $("body").xTip({
+                            type: "warning",
+                            message: state.error.msg
+                        });
+                    }
+                },
+                error:function(){
+                    $("body").xTip({
+                        type: "warning",
+                        message: "网络错误！"
+                    });
+                }
+            });
+        },
+        onCancel: function () {
+            return false;
+        }
+    });
+}
+
+/**
+ * @func
+ * @desc 重置虚机
+ */
+function resetkvm(){
+    $.confirm({
+        message: "确定是否重置虚拟机?",
+        okText: "是",
+        cancelText: "否",
+        onOk: function () {
+            $.ajax({
+                type: "get",
+                url: "/student/studentCourse/resetVm",
+                data: {'vmToken': vm_token},
+                datatype: "json",
+                beforeSend:function(){
+                    $(".resetkvm").html($(".resetkvm").text()+'<span class="ani_dot">...</span>');
+                    $(".resetkvm,.modal-bg").fadeIn();
+                },
+                success: function (state) {
+                    if (state.status == 1) {
+                        resetRecord();
+                        noStartState();
+                        runip = state.datas.run_at_ip;
+                        vm_token = state.datas.token;
+                        vnc_pwd = state.datas.vnc_password;
+                        vnc_port = state.datas.vnc_port;
+                        $(".kvm-left iframe").attr("src", '/student/studentCourse/createVnc?host=' + runip + '&port=' + vnc_port + '&password=' + vnc_pwd + '&token=' + vm_token);
+
+                    } else {
+                        $("body").xTip({
+                            type: "warning",
+                            message: state.error.msg
+                        });
+                    }
+                    $(".resetkvm,.modal-bg").fadeOut();
+                },
+                error:function(){
+                    $("body").xTip({
+                        type: "warning",
+                        message: "网络错误！"
+                    });
+                }
+            });
+        }
+    });
+}
+
+/*显示隐藏自定义弹框*/
+function closeMyconf(el,sh){
+    el.fadeToggle(sh);
+    $(".modal-bg").fadeToggle(sh);
+}
+
+/*关闭虚机弹框，右上角关闭*/
+$(".conf3 .icon-remove").click(function(){
+    closeMyconf($(".conf3"),false);
+});
+/*复制共享桌面链接*/
+$(".conf4 .copyUrl").click(function(){
+    $(".conf4 .shareUrl").select();
+    document.execCommand("Copy");
+});
+
+
+
+/*关闭共享桌面弹框*/
+$(".conf4 .cancel-btn,.conf4 .icon-remove").click(function(){
+    $(".conf4").hide();
+});
+
+
+/*关闭虚机不删除*/
+$(".conf3 .classifySave-btn").click(function(){
+    window.localStorage.removeVm = "false";
+    $.getJSON('/student/studentCourse/closeOrDelVm',
+        {'vmToken': vm_token,'opType':1},
+        function(data) {
+            if(data.status == 1) {
+                noStartState();
+                showHideSubTip(0,false);
+                resetRecord();
+                $("body").xTip({
+                    type: "success",
+                    message: "关机成功!"
+                });
+                $(".computer-active").find(".kvm_status").text("状态：关闭");
+                closeMyconf($(".conf3"),false);
+            }else {
+                $("body").xTip({
+                    type: "warning",
+                    message: data.error.msg
+                });
+            }
+        }).error(function(){
+        $("body").xTip({
+            type: "warning",
+            message: "网络错误！"
+        });
+    });
+});
+
+/*关闭虚机并删除*/
+$(".conf3 .cancel-btn").click(function(){
+    window.localStorage.removeVm = "true";
+    $.getJSON('/student/studentCourse/closeOrDelVm',
+        {'vmToken': vm_token,'op_type':2},
+        function(data) {
+            if(data.status == 1) {
+                $("body").xTip({
+                    type: "success",
+                    message: "虚拟机关闭并删除!"
+                });
+                closeMyconf($(".conf3"),false);
+                $(".computer-active").find(".kvm_status").text("状态：关闭");
+            }else {
+                $("body").xTip({
+                    type: "warning",
+                    message: data.error.msg
+                });
+            }
+        }).error(function(){
+        $("body").xTip({
+            type: "warning",
+            message: "网络错误！"
+        });
+    });
+});
+
+/*团队实验判断*/
+function temeTask(){
+    if($("#this-stu").val() != window.localStorage.stu_id){
+        $(".record .manage-btn:not(.back_test)").attr("disabled",true);
+    }
+}
+
+$(function(){
+    lodding_vm(false,true)
+})

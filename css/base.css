@@ -1,0 +1,15 @@
+body{
+			font-family: poppin,Tahoma,Arial,\5FAE\8F6F\96C5\9ED1,sans-serif;
+		}
+		.inner{
+			width: 1200px;
+			margin: 0 auto;
+
+		}
+		.cl{
+			clear: both;
+		}
+		.nomargin{
+			margin-right: 0px !important;
+
+		}

@@ -1,0 +1,248 @@
+/**
+ *
+ * @authors liusijie (you@example.org)
+ * @date    2016-09-09 10:14:39
+ * @version $Id$
+ */
+
+(function($){
+
+	/*
+	 无数据提示插件
+	 刘思婕
+	 */
+	//没有数据时 显示
+	// $.fn.noData = function(obj,options,fun){
+	//$.fn.noData = function(options,fun){
+	$.fn.noData = function(options){
+		//默认值
+		var settings = {
+			name:"noData",
+			version:"1.0",
+			url:"",
+			border: false,
+			align:"center",
+			text:"亲~这里什么都没有~"
+		};
+
+		var options = $.extend(settings, options || {});
+
+		// obj.after('<div class="notresource" style="display:block;">'+
+		//             '<span class="enptyimg"></span>'+
+		// 	            '<span>没有数据哦</span>'+
+		//             '</div>')
+
+
+		// var cont = '<div class="notresource" style="display:block;">'+
+		// 	            '<span class="enptyimg"></span>'+
+		// 	            '<span>'+ settings.text +'</span>'+
+		// 	            '</div>';
+
+		if (settings.border == true) {
+			$(this).addClass('tableStyle');
+		}else{
+			$(this).removeClass('tableStyle');
+		}
+
+		return $(this).each(function(){
+
+			var cont = '<span class="enptyimg"><i class="spcicon-nodata"></i></span>'+
+				'<span>'+ settings.text +'</span>';
+
+			$(this).css('display','block');
+			$(this).empty().append(cont);
+
+		});
+
+	}
+	// if(fun=="clear"){
+	// 	$(this)
+
+	// }
+
+	/*
+	 加载过程 loading 插件
+	 刘思婕
+	 */
+	$.fn.winLoad = function(options){
+
+		var settings = {
+			text:"", //图标后面跟的提示语
+			type:"", //默认为空的情况下 是在div下加载loading  table：为表格情况下
+			color:""
+
+		};
+
+		var winoptions = $.extend(settings, options || {});
+
+		var $this = $(this);
+
+		return $this.each(function(){
+			//div 方法
+			function loadingfundiv () {
+				$(".ajld").remove();
+				var ldtext = '<div class=ajld>'+'<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div><div class="loadingtext">'+settings.text+'</div></div>';
+				$this.empty();
+				$this.after(ldtext);
+				$(".ajld").find(".spinner div").css({'background':settings.color});
+				$(".ajld").find(".loadingtext").css({'color':settings.color});
+			}
+			//table 方法
+			function loadingfuntable () {
+				$(".ajld-table").remove();
+				var ldtext = '<div class=ajld-table>'+'<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div><div class="loadingtext">'+settings.text+'</div></div>';
+				$this.find("tbody").empty();
+				$this.after(ldtext);
+				$(".ajld-table").find(".spinner div").css({'background':settings.color});
+				$(".ajld-table").find(".loadingtext").css({'color':settings.color});
+			}
+			//table 方法
+			function loadingfunOn () {
+				$(".ajld-on").remove();
+				var ldtext = '<div class=ajld-on>'+'<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div><div class="loadingtext">'+settings.text+'</div></div>';
+				$this.after(ldtext);
+				$(".ajld-table").find(".spinner div").css({'background':settings.color});
+				$(".ajld-table").find(".loadingtext").css({'color':settings.color});
+			}
+			//是否添加 提示语 方法
+			// function loadingText () {
+			if(settings.text != ''){
+				//alert(2)
+				if(settings.type == 'table'){
+					loadingfuntable ();
+					$(".ajld-table").css({'width':'400px'});
+				}else if(settings.type == 'on'){
+					loadingfunOn ();
+					$(".ajld-on").css({'width':'400px'});
+				}else{
+					loadingfundiv ();
+					$(".ajld").css({'width':'400px'});
+				}
+			}else{
+				if(settings.type == 'table'){
+					loadingfuntable ();
+				}else if(settings.type == 'on'){
+					loadingfunOn ();
+				}else{
+					loadingfundiv ();
+				}
+			}
+			// }
+			// loadingText ();
+
+
+		});
+
+	};
+
+
+	/*
+	 图片加载失败(图片) 插件
+	 刘思婕
+	 */
+	$.fn.imgloadError = function(options){
+		var settings = {
+			name:"imgloadError",
+			version:"1.0",
+			img:""
+		};
+
+		var imgOptions = $.extend(settings, options || {});
+
+		var imgdefereds=[];
+
+		return $(this).each(function(){
+			var dfd=$.Deferred();
+			$(this).bind('load',function(){
+				dfd.resolve();
+				// $(this).winLoad({text:""});
+			}).bind('error',function(){
+				//图片加载错误，加入错误处理
+				// dfd.resolve();
+				if($(this).attr('src') == "" || $(this).attr('src') == undefined){
+					var img_url = '/teacher/img/01.png';
+					$(this).attr('src', img_url);
+				}else{
+					$(this).attr('src', '../../common/public/css/default/img2/error.jpg');
+				}
+			});
+			if(this.complete) setTimeout(function(){
+				dfd.resolve();
+			},1000);
+			imgdefereds.push(dfd);
+		});
+
+		// $.when.apply(null,imgdefereds).done(function(){
+		//   	callback();
+		// });
+	}
+
+	//快速提示的方法
+	$.fn.xTip=function(options){
+		var defaults={
+			type:"success",
+			position:"fixed",
+			location:null,
+			message:"",//提示消息
+			showTime:1000,
+			fadeOutTime:1000
+		};
+		var opts=$.extend(defaults,options);
+		// console.log($("#uedMinuteTip"))
+		opts.location=[$(window).width()/2-120,"35%"];
+		$("#uedMinuteTip").remove();
+		var html = "";
+		if(opts.type=="success"){
+			html += "<div id='uedMinuteTip' class='minute-tip ue-minute-success' style='position:"+opts.position+";top:"+opts.location[1]+";left:"+opts.location[0]+"px;z-index:99999999999999;'><span class='icon-ok'></span>";
+		}else{
+			html += "<div id='uedMinuteTip' class='minute-tip ue-minute-warning' style='position:"+opts.position+";top:"+opts.location[1]+";left:"+opts.location[0]+"px;z-index:99999999999999;'><span class='icon-exclamation-sign'></span>";
+		}
+		html += opts.message + "</div>";
+		$("body").append(html);
+		var tip = $("#uedMinuteTip");
+		var tipWidth = tip[0].offsetWidth;
+		tip.css({'left':$(window).width()/2-tipWidth/2})
+		setTimeout(function(){
+			tip.fadeOut(opts.fadeOutTime,function(){
+				$(this).remove();
+			});
+		},opts.showTime);
+	};
+
+
+	//objtip
+	$.fn.objTip=function(options){
+		var defaults={
+			type:"warning",
+			location:null,
+			position:"bottom",
+			message:"这里是默认提示默认提示，这里是默认提示默认提示这里是默认提示默认提示，这里是默认提示默认提示，这里是默认提示默认提示这里是默认提示默认提示。"
+		};
+		var opts=$.extend(defaults,options);
+
+		$(".tipBox").remove();
+		var html = "";
+
+		html +='<div class="tipBox qipao" style="display: none">'+
+					'<div class="qipao">'+
+						'<span class="bot"></span>'+
+						'<span class="top"></span>'+
+					'</div>'+
+					'<div class="tipBoxMain">'+
+					'这里是提示提示提示，这里是提示提示提示，这里是提示提示提示，这里是提示提示提示，这里是提示提示提示，这里是提示提示提示。 这里是提示提示提示，这里是提示提示提示，这里是提示提示提示，这里是提示提示提示，这里是提示提示提示，这里是提示提示提示。 这里是提示提示提示，这里是提示提示提示，这里是提示提示提示，这里是提示提示提示，这里是提示提示提示，这里是提示提示提示。'+
+					'</div>'+
+				'</div>';
+
+		$(this).append(html);
+		$(this).mouseenter(function(){
+			$(".tipBox").fadeIn(200);
+		})
+		$(this).mouseleave(function(){
+			$(".tipBox").fadeOut(200);
+		})
+
+
+	};
+
+
+})(jQuery)

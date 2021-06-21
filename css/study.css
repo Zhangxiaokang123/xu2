@@ -1,0 +1,12 @@
+h1 {
+    left: 28px;
+    top: 6px;
+    height: 50px;
+    text-align:center;
+}
+body{
+    font-size: 20px;
+    background-image:url(/images/preview.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}

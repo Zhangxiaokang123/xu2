@@ -1,0 +1,1097 @@
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+/*@import url(public2.css);*/
+/*组件:必填项，input， 搜索栏，tab，标题，tree,按钮，进度条*/
+/*公共模块*/ 
+/*所有table*/
+/*color*/
+@import url(public3.css); 
+@import url(public4.css);  
+@import url(table.css); 
+@import url(color.css);
+html {
+    font-family: "Microsoft YaHei";
+    color: #222;
+    font-size: 12px;
+    line-height: 1.4;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+/*整体默认字色*/
+body{
+    background: #fff;
+    font: 14px/2em Microsoft YaHei, SimSun, Arial;
+    color: #14191e;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 400;
+    font-family: "Hiragino Sans GB", "Microsoft Yahei", arial, \5b8b\4f53, "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+    overflow-y:visible;
+    position: static;
+}
+/*防止段落纯字符不换行*/
+p{
+    word-break:break-all;   
+}
+strong{
+    font-weight:bold;   
+}
+fieldset, img {
+    border: 0;
+}
+
+img {
+    max-width: 100%;
+}
+
+address, caption, cite, code, dfn, th, var, optgroup, i {
+    font-style: normal;
+    font-weight: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+    font-family: "Microsoft YaHei";
+}
+h2 {
+    font-size: 20px;
+}
+
+h3 {
+    font-size: 16px;
+    line-height: 32px;
+}
+
+h5 {
+    font-size: 14px;
+    line-height: 28px
+}
+abbr, acronym {
+    border: 0;
+    font-variant: normal;
+}
+
+code, kbd, samp, tt {
+    font-size: 100%;
+}
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+:link, :visited, ins {
+    text-decoration: none;
+}
+:focus {
+    outline: 0;
+}
+::-moz-placeholder {
+    color: #c9c9c9;
+    font-size: 14px
+}
+
+::-webkit-input-placeholder {
+    color: #c9c9c9;
+    font-size: 14px;
+}
+input::-ms-clear {
+    display: none;
+}
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+textarea[disabled]{
+    background: #f4f4f4;
+}
+table{
+    table-layout:inherit;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+sup, sub {
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+a{
+    text-decoration: none;
+}
+a:hover {
+    /*color: #d74253;*/
+}
+a:focus {
+    outline: none;
+    -moz-outline: none;
+}
+a.hidefocus {
+    outline: none;
+}
+button.hidefocus::-moz-focus-inner {
+    border: none;
+}
+.btn.hide {
+    display: none;
+}
+input, textarea {
+    outline: none;
+    box-sizing: inherit;
+}
+
+caption,th{
+    font-weight: normal;
+    text-align: left;
+}
+ol,ul{
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+select,input,textarea{
+    padding: 5px;
+    outline: none;
+    /*border: 1px solid #e8e7e7;*/
+    font-family: "Microsoft Yahei";
+}
+select {
+    background-color: #fff;
+}
+select option:hover {
+    background-color: #2ba6cb;
+}
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers
+ */
+.l {
+    float: left;
+}
+
+.r {
+    float: right;
+}
+.clear {
+    height: 0;
+    overflow: hidden;
+    clear: both
+}
+
+.hide {
+    display: none;
+}
+.hidden {
+    display: none !important;
+}
+.mr20{
+    margin-right: 20px;
+}
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.clearfix {
+    *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    content: '\0020';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+/*
+ * 没有资源的提示
+ */
+.notresource{
+    /*display:none;*/
+}
+
+/*
+ * 表格选中样式
+ */
+.ischecked{
+    background:#DEF3FB;
+}
+
+/*
+ * 有排序的列表
+ */
+.isort{
+    cursor:pointer;
+}
+
+/*
+ * 模态框背景
+ */
+.modal-bg {
+    display:none;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width:100%;
+    height:100%;
+    text-align:center;
+    z-index: 10;
+    opacity: 0.5;
+}
+
+/*!*红色字体*!*/
+.manage-redfont{
+    /*color: red;*/
+    font-size: 14px;
+    padding-right:2px;
+    display:none;
+}
+
+/*
+ *a-upload  上传按钮
+ */
+.my-upload {
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+    font-size: 12px;
+    border-radius: 4px;
+    font: 13px/22px "\5FAE\8F6F\96C5\9ED1", arial;
+    margin:0 5px;
+    background-color: transparent;
+    cursor: pointer;
+    text-align: center;
+    transition: all .3s ease;
+    overflow: hidden;
+    position: relative;
+    top:9px;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.my-upload input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    border:1px solid blue;
+    cursor:pointer;
+}
+
+
+
+/*
+ *按钮样式
+ */
+/*.manage-btn{*/
+    /*color: #4e7add;*/
+    /*font-size: 13px;*/
+    /*border-radius: 4px;*/
+    /*font: 13px/22px "\5FAE\8F6F\96C5\9ED1", arial;*/
+    /*padding: 2px 6px;*/
+    /*margin:0 5px;*/
+    /*border: 1px solid #4e7add;*/
+    /*background-color: transparent;*/
+    /*cursor: pointer;*/
+    /*text-align: center;*/
+    /*transition: all .3s ease;*/
+    /*overflow: hidden;*/
+    /*outline: none;*/
+/*}*/
+/*.manage-btn:hover{*/
+    /*background:#4e7add;*/
+    /*color: #fff;*/
+/*}*/
+/*.teacher-course-searchbox .msearch{*/
+    /*height:41px;*/
+    /*width:10%;*/
+    /*font-size: 16px;*/
+    /*float:right;*/
+    /*margin:0;*/
+    /*position: relative;*/
+    /*top:-1px;*/
+    /*box-sizing: content-box;*/
+    /*padding:0 10px;*/
+/*}*/
+.manage-btn[disabled]{
+    background:#f4f4f4;
+    color: #434343;
+    border-color:#f4f4f4;
+    cursor: default;
+}
+.manage-btn[disabled]:hover{
+    background: #f4f4f4;
+    cursor: default;
+}
+
+
+/*开关按钮*/
+.off-btn,
+.on-btn{
+    display:inline-block;
+    width:62px;
+    color:#fff !important;
+    padding:0;
+    background:#4e7add;
+    text-align: center;
+    border-radius: 15px;
+    cursor:pointer;
+}
+.off-btn{
+    background:#A4A4A4;
+}
+
+/*
+ *搜索框样式
+ */
+/*.teacher-course-searchbox{*/
+    /*width: 99.8%;*/
+    /*height:39px;*/
+    /*margin:20px auto;*/
+    /*border:1px solid #e1dddd;*/
+    /*transition:border .5s;*/
+    /*position: relative;*/
+/*}*/
+
+/*.teacher-course-searchbox:hover{*/
+    /*border:1px solid #c8c8c8;*/
+/*}*/
+/*.icon-search{*/
+    /*margin-left:8px;*/
+    /*font-size:18px;*/
+    /*color: #e1dddd;*/
+    /*line-height:40px;*/
+    /*position: absolute;*/
+    /*z-index: 2;*/
+/*}*/
+/*.teacher-course-searchinput{*/
+    /*padding:8px 5px 8px 35px;*/
+    /*box-sizing: border-box;*/
+    /*width:90%;*/
+    /*height:100%;*/
+    /*font-size:15px;*/
+    /*color:#5e5e5e;*/
+    /*border:none;*/
+    /*outline:none;*/
+    /*background:#fff;*/
+    /*position: absolute;*/
+    /*left:0;*/
+    /*top:0;*/
+/*}*/
+/*.manage-condition{*/
+    /*margin:5px 0;*/
+    /*display:none;*/
+/*}*/
+/*.float-right{*/
+    /*float:right;*/
+/*}*/
+
+/*!*导航*!*/
+/*.manage-nav{*/
+    /*border-bottom: 1px solid #ccc;*/
+/*}*/
+/*.manage-nav li,*/
+/*.menu-warp li{*/
+    /*float:left;*/
+    /*height: 40px;*/
+    /*line-height: 40px;*/
+    /*text-align: center;*/
+    /*font-size: 14px;*/
+    /*padding: 0px 2px;*/
+    /*margin-right: 15px;*/
+    /*cursor: pointer;*/
+/*}*/
+/*.manage-active,*/
+/*.menu-warp li.selected{*/
+    /*color: #4e7add;*/
+    /*border-bottom: 3px solid #4e7add;*/
+/*}*/
+/*.manage-detail-top{*/
+    /*font-size: 14px;*/
+    /*margin:5px;*/
+/*}*/
+/*.manage-detail-top>span{*/
+    /*margin-right:15px;*/
+/*}*/
+/*
+ *表格样式
+ */
+.mytable-box{
+    width:100%;
+    overflow: auto;
+}
+.mytable{
+    width:100%;
+    margin-top:10px;
+    /*border:1px solid #e1dddd;*/
+    /*color:#14191e;*/
+}
+.mytable tr {
+    height:29px;
+}
+.mytable td{
+    /*border:1px solid #e1dddd;*/
+    text-align:left;
+    font-size: 12px;
+}
+.mytable td a{
+    /*color:blue;*/
+    cursor: pointer;
+    margin:0 5px;
+}
+.mytable td a:hover{
+    /*color:red;*/
+}
+.mytable th {
+    font-size: 12px;
+    text-align: center;
+    /*color: #666;*/
+    /*background: #efefef;*/
+    font-family: "Microsoft YaHei";
+    /*border-right:1px solid #e1dddd;*/
+}
+.mytable th .icon-sort {
+    /*color:#A2B8C7;*/
+    transform:scale(0.875);
+}
+.mytable th .icon-sort,
+.mytable th .icon-caret-down,
+.mytable th .icon-caret-up{
+    float:right;
+    margin-top:0;
+    line-height:20px;
+    margin-right:5px;
+}
+/*.mytable .notresource td{*/
+    /*background:#fff;*/
+/*}*/
+.mytitle{
+    width:120px;
+    height:50px;
+    line-height: 50px;
+    padding:5px;
+    /*color:#4e7add;*/
+    /*background: #fff;*/
+    position:absolute;
+    /*border:1px solid #4e7add;*/
+    border-radius: 5px;
+    display:none;
+    /*box-shadow: 2px 2px 2px #4e7add;*/
+    text-align: center;
+}
+.mytitlebtn{
+    cursor: not-allowed;
+    /*background:#f2f2f2;*/
+    /*border:1px solid #f2f2f2;*/
+}
+/*.mytitlebtn:hover{*/
+    /*color:#4e7add;*/
+    /*background:#f2f2f2;*/
+/*}*/
+
+/*教师端--内容*/
+
+.teacontlist>ul{
+    height:auto;
+    /*color:#737373;*/
+   /* border:1px solid #e1dddd;*/
+    transition: .5s;
+    margin-bottom:20px;
+}
+.teacontlist>ul:hover{
+    box-shadow: 0px 0px 7px #e1dddd;
+}
+/*.teacontlist .notresource{
+    display:none;
+    border: 1px solid #e1dddd;
+    height:90px;
+    line-height:90px;
+    text-align: center;
+    color:#737373;
+    margin-bottom:20px;
+}*/
+.teacontlist .nottask{
+    height:40px;
+    line-height:40px;
+    text-align: center;
+    border:none;
+    padding:0;
+    display:none;
+}
+.teacontlist .manage-btn{
+    padding:3px 25px;
+    float:right;
+}
+.teacontlist .firstcont{
+    height:90px;
+    padding:10px;
+    /*border-bottom: 1px solid #e1dddd;*/
+}
+.teacontlist .iconwrap{
+    width:100px;
+    height:100%;
+    position: relative;
+}
+.teacontlist .icon-list-ul{
+    padding:11px 13px;
+    /*background:#ddd;
+    color:#fff;*/
+    font-size:30px;
+    border-radius: 100%;
+    position: absolute;
+    margin:auto;
+}
+.firstcont>div{
+    float:left;
+    height:100%;
+}
+.firstcont>div:nth-child(3){
+    float:right;
+    position:relative;
+}
+.cont1>p:nth-child(1){
+    font-size: 18px;
+    max-width: 900px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.cont1>p:nth-child(2){
+    padding:5px 0;
+}
+.cont1>p:nth-child(2)>span{
+    padding-right:5px;
+}
+.cont1>p:nth-child(2)>span:nth-child(1){
+    max-width: 400px;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: text-bottom;
+}
+/*.cont1>p:nth-child(2) span>span{
+    color:#d74253;
+}*/
+.cont1>p:nth-child(3){
+    padding-top:10px;
+    /*color:#b1b1b1;*/
+}
+.cont2 i{
+    padding-right:2px;
+}
+.cont2>div:nth-child(2){
+    width:300px;
+    position:absolute;
+    bottom:0;
+    right:0;
+}
+.cont2>div:nth-child(2)>span{
+    padding:0 9px;
+    /*color:#737373;*/
+    moz-user-select: -moz-none;
+    -moz-user-select: none;
+    -o-user-select:none;
+    -khtml-user-select:none;
+    -webkit-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    cursor:pointer;
+}
+/*.cont2>div:nth-child(2)>span:hover{
+    color:#d74253;
+}*/
+.taskwrap{
+    display:none;
+    padding:25px 50px;
+}
+.taskwrap li{
+    position:relative;
+    padding:20px 0 20px 30px;
+    height:90px;
+    /*border-bottom:1px dashed #e1dddd;*/
+}
+.tasktype{
+    /*background: rgba(78, 122, 221, 0.79);*/
+    border-radius: 50%;
+    position:absolute;
+    width:15px;
+    height:15px;
+    left:-20px;
+    top: 40px;
+    text-align: center;
+    font-size: 13px;
+    /*color:#fff;*/
+}
+.tasklxwrap li:first-child .tasktype,.taskwrap>li .tasktype{
+    width:25px;
+    height:25px;
+    line-height:24px;
+    left: -26px;
+}
+.tasklxwrap .tasktype:before{
+    content:"";
+    width:1px;
+    height: 117px;
+    position: absolute;
+    z-index: 1;
+    left: 7px;
+    top:15px;
+    margin:0 auto;
+    border-left:1px solid rgb(31, 70, 101);
+}
+.tasklxwrap li:first-child .tasktype:before{
+    left: 12px;
+    top: 24px;
+    height: 108px;
+}
+.tasklxwrap li:last-child .tasktype:before{   /*连续实验最后一个竖线*/
+    display: none;
+}
+
+.taskwrap>li:first-child .upmovebtn,                         /*第一个普通实验的上移按钮*/
+.taskwrap>.tasklxwrap:first-child>li:first-child .upmovebtn, /*第一个连续实验的上移按钮*/
+.tasklxwrap>li:nth-child(2) .upmovebtn,                      /*连续实验的第二个上移按钮*/
+.tasklxwrap>li:last-child .downmovebtn,                      /*连续实验的最后一个下移按钮*/
+.taskwrap>li:last-child .downmovebtn,                        /*普通实验里面最后一个下移按钮*/
+.taskwrap>.tasklxwrap:last-child>li:last-child .downmovebtn, /*最后一个是连续实验的实验里面最后一个下移按钮*/
+.taskwrap>.tasklxwrap:last-child>li:first-child .downmovebtn,/*最后一个是连续实验的实验的第一个下移*/
+.tasklxwrap .sharebtn,                                       /*连续实验里面的所有共享按钮*/
+.tasklxwrap li:not([data-initid = "0"]) .tsavebtn            /*连续实验里面的除了第一个共享按钮*/
+    /*.tasklxwrap .removebtn{                                      !*连续实验里面的所有删除按钮*!*/
+{
+    display: none;
+}
+
+.tasklxwrap>li:first-child .downmovebtn,                     /*连续实验里面第一个下移按钮*/
+.tasklxwrap>li:first-child .sharebtn,                        /*连续实验里面第一个共享按钮*/
+.taskwrap>li .sharebtn                                       /*普通实验里面的共享按钮*/
+    /*.tasklxwrap li:last-child .removebtn,                        !*连续实验里面最后一个删除按钮*!*/
+    /*.tasklxwrap li:first-child .removebtn{                       !*连续实验里面第一个删除按钮*!*/
+{
+    display: inline-block;
+}
+.ccont1{
+    float:left;
+    height:100%;
+}
+.ccont1 p:nth-child(1){
+    font-size: 18px;
+    max-width: 800px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.ccont1 p:nth-child(2){
+    padding:3px 0;
+}
+.ccont1 p:nth-child(2) span{
+    /*color:#d74253;*/
+    padding-right:5px;
+}
+.ccont1 p:nth-child(3){
+    padding-top:20px;
+    /*color:#b1b1b1;*/
+}
+.ccont2{
+    width:300px;
+    float:right;
+    height:100%;
+    position:relative;
+}
+.ccont2>div:nth-child(2){
+    position: absolute;
+    right:0;
+    bottom:0;
+}
+.ccont2>div:nth-child(2) span{
+    padding-right:25px;
+    cursor: pointer;
+    moz-user-select: -moz-none;
+    -moz-user-select: none;
+    -o-user-select:none;
+    -khtml-user-select:none;
+    -webkit-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+.ccont2>div:nth-child(2) span i{
+    padding-right:3px;
+}
+.ccont2>div:nth-child(2) span:hover{
+    color:#d74253;
+}
+
+/*面包屑导航*/
+.crumb-nav{
+    height: 42px;
+    background: #fff;
+    font-size: 14px;
+    color: #9a9a9a;
+    line-height: 42px;
+    display: none;
+}
+.crumb-nav a{
+    color: #9a9a9a;
+}
+.crumb-nav a:hover{
+    color:#4e7add;
+    cursor:pointer;
+}
+
+/*按钮样式2*/
+/*.kvm-button{*/
+    /*font-family: "Microsoft Yahei";*/
+    /*box-sizing: border-box;*/
+    /*cursor: pointer;*/
+    /*display: inline-block;*/
+    /*font-weight: 300;*/
+    /*text-align: center;*/
+    /*text-decoration: none;*/
+    /*transition-duration: 0.1s;*/
+    /*transition-property: all;*/
+    /*background-color: #4f86eb;*/
+    /*border-color: #4e7add;*/
+    /*color: #fff;*/
+    /*font-size: 12px;*/
+    /*height: 30px;*/
+    /*line-height: 30px;*/
+    /*padding: 0 30px;*/
+    /*margin: 5px;*/
+/*}*/
+
+/*.kvm-button:link{*/
+    /*color:black;*/
+/*}*/
+/*.kvm-button:hover{*/
+    /*background: rgba(81, 141, 244, 0.9);*/
+/*}*/
+/*.kvm-button:active{*/
+    /*color: #577fe9;*/
+    /*border-color: rgba(83, 135, 239, 0.79);*/
+    /*background: rgba(88, 132, 241, 0.87);*/
+    /*box-shadow:0 1px 3px rgba(0,0,0,0.2) inset;*/
+    /*text-shadow: 0 1px 0px rgba(255,255,255,0.3);*/
+/*}*/
+
+/*查看笔记样式*/
+.notesbox{
+    text-align: left;
+    display: none;
+    width:1000px;
+    height:600px;
+    position: fixed;
+    margin:auto;
+    left:0;top:0;right:0;bottom:0;
+    /*border:5px solid rgba(139, 139, 139, 0.65);*/
+    background: #fff;
+    z-index: 13;
+    border-radius: 5px;
+}
+.notestitle{
+    background:#4E7ADD;
+    height:35px;
+    color:#fff;
+    line-height:35px;
+    font-size: 17px;
+    font-weight: 600;
+    padding-left:10px;
+}
+.notestitle .icon-remove-sign{
+    float: right;
+    height:35px;
+    line-height:35px;
+    margin-right:10px;
+    font-size: 19px;
+    cursor: pointer;
+}
+.notestitle .icon-remove-sign:hover{
+    color: rgba(255, 118, 44, 0.85);
+}
+.noteswrap{
+    height:100%;
+    width:100%;
+    position: absolute;
+    top:0;
+    box-sizing: border-box;
+    padding-top:45px;
+}
+.notescont{
+    width:70%;
+    float:left;
+    height:100%;
+    box-sizing:border-box;
+    padding:8px;
+}
+.notescont-title{
+    border-bottom:1px solid #c2c2c2;
+}
+.notescont-title>div{
+    display: inline-block;
+    height:35px;
+    line-height:35px;
+    margin-left:10px;
+    color: #4a4a4a;
+    font-size: 15px;
+}
+.notescont-title .conttirle-name{
+    font-weight: 500;
+    color: #6d6d6d;
+}
+.notescont-title .conttirle-time{
+    color: #a5a5a5;
+}
+.notescont-cont{
+    height:480px;
+    padding:15px 0;
+}
+.noteslist{
+    width:30%;
+    float:right;
+    box-sizing:border-box;
+    height:100%;
+    background: #F9F3F5;
+    border-left:1px solid #ccc;
+    padding:10px;
+}
+.noteslist li{
+    cursor: pointer;
+    height:30px;
+    line-height:30px;
+    transition:background .2s;
+    padding-left:10px;
+    width: 250px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.noteslist li:hover{
+    color:#fff;
+    background: #1f4665;
+}
+.noteactive{
+    color:#fff;
+    background: #1f4665;
+}
+.blockUI.blockOverlay{
+    z-index: 4;
+}
+
+
+.container, .page-container,
+.wrap-catalog-box {
+    position: relative;
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.wrap-box {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.wrap-box-left25 {
+    position: relative;
+    float: left;
+    width: 25%;
+    overflow: hidden;
+}
+.wrap-box-right72 {
+    position: relative;
+    float:right;
+    width:72%;
+    overflow: hidden;
+}
+.shadow {
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.overlay{
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #666666;
+    opacity: .50;
+    filter:Alpha(Opacity=50); 
+    position:fixed;
+    z-index:20161010;   
+}
+.dialogBox{
+    position:fixed;
+    z-index:20161020;
+    background-color:white;
+    display:none;
+}
+
+
+
+
+
+
+
+
+
+
+.errorinput {
+    border: 1px solid #e28282;
+    background-color: #ffe7e7;
+}
+.errormsg {
+    color: #e28282;
+}
+
+
+
+/*!*通用必填标识 勿删*!*/
+/*.impInfostar {*/
+    /*color: red;*/
+    /*position: absolute;*/
+    /*margin-left: -15px;*/
+    /*margin-top: 3px;*/
+/*}*/
+/** 调整弹出框里面的发帖表情包位置*/
+.blockUI.blockPage{
+    z-index: 10001 !important;
+}
+#edui_fixedlayer{
+    z-index: 10008 !important;
+}
+
+/*pre标签不换行问题修改*/
+.prettyprint.prettyprinted{
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
